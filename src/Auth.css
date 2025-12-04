@@ -1,0 +1,215 @@
+/* BACKGROUND */
+.auth-wrapper {
+  width: 100%;
+  height: 100vh;
+  background: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfBLsOI7XIvWKScMYHzMQWPBThB5C-I-Co3Fu4SUasLNscJdWCm1rQrTZHWrJ9smP27MLV27tgrEnxRFao5T_0Ig7ejTuvvl_9ZYEy-DnU6BVryxaWtk8P1AaHsr0762WeyoEPXLyyCfD0nd1fOUkJ_5DPNKS9ZB2yJNlX1dAttALbEqlCUuocitoAZnG-DAoQwYTIWTRXa6cNh3f4yW89gHWn95PjT3jxFKcNpsCUbUIo9M6VIn-uoPQzEEayKW8r7X0CXzC4eGw")
+    repeat;
+  background-size: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Overlay darkness */
+.auth-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 26, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+/* MAIN CARD */
+.auth-card {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 1300px;
+  height: 82vh;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.35);
+
+  box-shadow: 0 0 12px cyan, 0 0 25px rgba(0, 255, 255, 0.4);
+}
+
+/* LEFT IMAGE */
+.auth-left {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* RIGHT SIDE */
+.auth-right {
+  padding: 50px 45px;
+  background: rgba(0, 0, 0, 0.78);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* TITLE */
+.auth-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px cyan;
+}
+
+.auth-title-bars {
+  margin: 15px auto 30px;
+  display: flex;
+  gap: 6px;
+  width: 100px;
+}
+
+.bar {
+  height: 6px;
+  border-radius: 12px;
+}
+
+.bar-cyan {
+  background: cyan;
+  flex: 2;
+}
+
+.bar-magenta {
+  background: magenta;
+  flex: 1;
+}
+
+.bar-light {
+  background: rgba(0, 255, 255, 0.5);
+  flex: 1;
+}
+
+/* TEXT */
+.welcome {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: rgba(0, 255, 255, 0.7);
+  margin-bottom: 25px;
+}
+
+/* LOGIN / SIGNUP TOGGLE */
+.toggle-box {
+  display: flex;
+  border: 1px solid cyan;
+  background: rgba(0, 255, 255, 0.2);
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 12px;
+  color: cyan;
+  font-size: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.toggle-btn.active {
+  background: cyan;
+  color: black;
+  font-weight: 700;
+}
+
+/* FORM */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-form label {
+  font-size: 14px;
+  color: cyan;
+}
+
+.auth-form input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid cyan;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+/* PASSWORD FIELD */
+.password-field {
+  display: flex;
+}
+
+.password-field input {
+  flex: 1;
+  border-radius: 10px 0 0 10px;
+}
+
+.eye-btn {
+  width: 50px;
+  border-radius: 0 10px 10px 0;
+  border: 1px solid cyan;
+  border-left: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: cyan;
+  cursor: pointer;
+}
+
+/* LINK */
+.forgot {
+  text-align: right;
+  font-size: 13px;
+  color: cyan;
+  margin-top: -5px;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: cyan;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 0 15px cyan;
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  background: white;
+}
+
+/* SIGNUP TEXT */
+.signup-text {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.signup-text a {
+  color: cyan;
+  font-weight: bold;
+}

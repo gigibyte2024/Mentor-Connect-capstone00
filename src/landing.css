@@ -1,0 +1,199 @@
+/* =============== GLOBAL PAGE =============== */
+.landing-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: #0A0F1E 
+    url('https://lh3.googleusercontent.com/aida-public/AB6AXuBfBLsOI7XIvWKScMYHzMQWPBThB5C-I-Co3Fu4SUasLNscJdWCm1rQrTZHWrJ9smP27MLV27tgrEnxRFao5T_0Ig7ejTuvvl_9ZYEy-DnU6BVryxaWtk8P1AaHsr0762WeyoEPXLyyCfD0nd1fOUkJ_5DPNKS9ZB2yJNlX1dAttALbEqlCUuocitoAZnG-DAoQwYTIWTRXa6cNh3f4yW89gHWn95PjT3jxFKcNpsCUbUIo9M6VIn-uoPQzEEayKW8r7X0CXzC4eGw')
+    repeat;
+  background-size: cover;
+  position: relative;
+  font-family: "Space Grotesk", sans-serif;
+  color: white;
+}
+
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 30, 0.8);
+  backdrop-filter: blur(3px);
+}
+
+/* =============== HEADER =============== */
+.landing-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 80px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0,255,255,0.2);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-diamond {
+  width: 28px;
+  height: 28px;
+  background: cyan;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%);
+  filter: drop-shadow(0 0 6px cyan);
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.header-nav {
+  display: flex;
+  gap: 40px;
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.7);
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.nav-link:hover {
+  color: cyan;
+}
+
+/* =============== MAIN SECTION =============== */
+.landing-main {
+  position: relative;
+  padding-top: 120px;
+  text-align: center;
+  z-index: 2;
+}
+
+.landing-title {
+  font-size: 62px;
+  font-weight: 900;
+  text-shadow: 0 0 15px cyan, 0 0 25px #ff00ff;
+}
+
+.landing-subtitle {
+  color: #eaeaea;
+  font-size: 18px;
+  margin-top: 12px;
+}
+
+/* BUTTONS */
+.landing-btns {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.primary-btn {
+  background: cyan;
+  color: black;
+  padding: 14px 35px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 15px cyan;
+  transition: 0.2s;
+}
+
+.primary-btn:hover {
+  background: white;
+}
+
+/* Secondary button */
+.secondary-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid cyan;
+  padding: 14px 30px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: 0.2s;
+}
+
+.secondary-btn:hover {
+  background: rgba(0,255,255,0.15);
+}
+
+/* DROPDOWN */
+.dropdown-wrapper {
+  position: relative;
+}
+
+.role-dropdown {
+  position: absolute;
+  top: 55px;
+  right: 0;
+  width: 150px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid cyan;
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.role-dropdown p {
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.role-dropdown p:hover {
+  background: rgba(0,255,255,0.15);
+}
+
+/* FEATURES */
+.features-row {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.feature-box {
+  padding: 10px 18px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(0,255,255,0.35);
+  border-radius: 10px;
+  backdrop-filter: blur(3px);
+}
+
+/* FOOTER */
+.landing-footer {
+  position: relative;
+  margin-top: 100px;
+  padding: 40px;
+  border-top: 1px solid rgba(0,255,255,0.2);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.footer-link {
+  color: rgba(255,255,255,0.7);
+}
+
+.footer-link:hover {
+  color: cyan;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.footer-copy {
+  margin-top: 15px;
+  color: rgba(255,255,255,0.6);
+}

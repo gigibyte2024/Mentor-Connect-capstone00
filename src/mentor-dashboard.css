@@ -1,0 +1,416 @@
+/* =============== GLOBAL STYLES =============== */
+
+body, html, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: #0A0A1A;
+  font-family: "Space Grotesk", sans-serif;
+  color: #ddd;
+}
+
+.dashboard-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: #0A0A1A;
+  overflow: hidden;
+  position: relative;
+}
+
+/* =============== SIDEBAR =============== */
+
+.sidebar {
+  width: 250px;
+  background: #0A0A1A;
+  border-right: 1px solid rgba(0, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px 20px;
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.mentor-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mentor-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.mentor-name {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mentor-role {
+  color: cyan;
+  font-size: 12px;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.menu-item:hover {
+  background: rgba(0, 255, 255, 0.1);
+  color: white;
+}
+
+.menu-item.active {
+  background: rgba(0,255,255,0.2);
+  color: cyan;
+  font-weight: 600;
+}
+
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* =============== MAIN LAYOUT =============== */
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #070714;
+}
+
+/* =============== TOPBAR =============== */
+
+.topbar {
+  height: 65px;
+  width: 100%;
+  background: rgba(10, 10, 26, 0.75);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 24px;
+  height: 24px;
+  background: cyan;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%);
+  filter: drop-shadow(0 0 5px cyan);
+}
+
+.topbar-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-box {
+  height: 38px;
+  width: 220px;
+  background: rgba(0,255,255,0.08);
+  border: 1px solid rgba(0,255,255,0.3);
+  padding: 0 15px;
+  color: white;
+  border-radius: 8px;
+  outline: none;
+}
+
+.search-box::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.notif-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0,255,255,0.3);
+  background: rgba(0,255,255,0.12);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.notif-btn:hover {
+  background: rgba(0,255,255,0.22);
+}
+
+.top-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid cyan;
+  background-size: cover;
+  background-position: center;
+}
+
+
+/* =============== CONTENT =============== */
+
+.content {
+  padding: 35px;
+  overflow-y: auto;
+  height: calc(100vh - 65px);
+}
+
+.page-title {
+  font-size: 35px;
+  color: white;
+  font-weight: 900;
+  margin-bottom: 25px;
+}
+
+
+/* =============== GRID =============== */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 35px;
+}
+
+
+/* =============== STAT BOXES =============== */
+
+.stat-box {
+  padding: 25px;
+  background: rgba(0,255,255,0.08);
+  border: 1px solid rgba(0,255,255,0.3);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,255,255,0.2);
+}
+
+.stat-label {
+  color: white;
+  font-size: 15px;
+}
+
+.stat-value {
+  color: cyan;
+  font-size: 36px;
+  font-weight: 900;
+  text-shadow: 0 0 8px cyan;
+  margin-top: 5px;
+}
+
+.stat-change {
+  color: #00FF7F;
+  margin-top: 5px;
+}
+
+
+/* =============== UPCOMING SESSIONS BOX =============== */
+
+.session-box {
+  padding: 25px;
+  background: rgba(0,255,255,0.08);
+  border: 1px solid rgba(0,255,255,0.3);
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,255,255,0.2);
+}
+
+.session-title {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0,255,255,0.3);
+}
+
+.timeline-item {
+  padding-left: 25px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: cyan;
+  border-radius: 50%;
+  position: absolute;
+  left: -2px;
+  top: 4px;
+  box-shadow: 0 0 10px cyan;
+}
+
+.time {
+  color: cyan;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.session-heading {
+  color: white;
+  font-weight: 600;
+}
+
+.session-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+
+
+/* =============== TABLE =============== */
+
+.table-box {
+  background: rgba(0,255,255,0.05);
+  border: 1px solid rgba(0,255,255,0.2);
+  border-radius: 12px;
+  padding: 25px;
+  backdrop-filter: blur(2px);
+}
+
+.table-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: cyan;
+  margin-bottom: 20px;
+}
+
+.req-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.req-table thead {
+  border-bottom: 1px solid rgba(0,255,255,0.3);
+}
+
+.req-table th {
+  padding: 12px;
+  color: cyan;
+  text-transform: uppercase;
+  font-size: 13px;
+  text-align: left;
+}
+
+.req-table td {
+  padding: 15px 12px;
+  font-size: 14px;
+  color: white;
+}
+
+.req-table tr + tr {
+  border-top: 1px solid rgba(0,255,255,0.1);
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.view-btn {
+  padding: 6px 12px;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: transparent;
+  color: #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.view-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.accept-btn {
+  padding: 6px 12px;
+  background: cyan;
+  color: black;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 0 10px cyan;
+}
+
+.accept-btn:hover {
+  background: rgb(0, 220, 220);
+}
+
+
+/* =============== FLOATING ADD BUTTON =============== */
+
+.add-btn {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: magenta;
+  color: white;
+  font-size: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px magenta;
+}
+
+.add-btn:hover {
+  background: rgb(255, 0, 200);
+}
