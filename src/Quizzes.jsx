@@ -121,10 +121,14 @@ const Quizzes = () => {
             className="quiz-card"
             onClick={() => navigate(`/quiz/${q.id}`)}
           >
+            {/* SIDE BAR */}
             <div className={`quiz-bar bar-${q.color}`}></div>
 
             <div className="quiz-top">
-              <span className="quiz-icon">{q.icon}</span>
+              {/* MATERIAL ICONS FIXED */}
+              <span className="quiz-icon material-symbols-outlined">
+                {q.icon}
+              </span>
 
               {/* PROGRESS RING */}
               <div className="progress-circle">

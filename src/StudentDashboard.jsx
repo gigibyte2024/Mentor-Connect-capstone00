@@ -18,7 +18,7 @@ const StudentDashboard = () => {
         <div className="sidebar-menu">
           <p className="menu-item active">📊 Dashboard</p>
 
-          {/* ✅ UPDATED — Discover Mentors now navigates to mentor discover page */}
+          {/* Discover Mentors */}
           <p
             className="menu-item"
             onClick={() => navigate("/student-mentors")}
@@ -27,8 +27,24 @@ const StudentDashboard = () => {
             👤 Discover Mentors
           </p>
 
-          <p className="menu-item">🧠 Quizzes</p>
-          <p className="menu-item">💬 Chat</p>
+          {/* Quizzes */}
+          <p
+            className="menu-item"
+            onClick={() => navigate("/quizzes")}
+            style={{ cursor: "pointer" }}
+          >
+            🧠 Quizzes
+          </p>
+
+          {/* ⭐ CHAT BUTTON — UPDATED */}
+          <p
+            className="menu-item"
+            onClick={() => navigate("/chat")}
+            style={{ cursor: "pointer" }}
+          >
+            💬 Chat
+          </p>
+
           <p className="menu-item">⚙ Profile</p>
         </div>
 
@@ -52,7 +68,6 @@ const StudentDashboard = () => {
 
       {/* MAIN CONTENT */}
       <main className="student-main">
-
         {/* TOP BAR */}
         <header className="topbar">
           <h1 className="top-title">Welcome Back, Jane!</h1>
@@ -148,7 +163,6 @@ const StudentDashboard = () => {
                 <p className="quiz-status pink">In Progress</p>
                 <h4>Cryptography Basics</h4>
                 <p className="small-muted">Security Module</p>
-
                 <div className="progress-bar small">
                   <div className="progress-fill pink" style={{ width: "75%" }}></div>
                 </div>
@@ -158,7 +172,6 @@ const StudentDashboard = () => {
                 <p className="quiz-status">Not Started</p>
                 <h4>Data Structures Challenge</h4>
                 <p className="small-muted">Core Curriculum</p>
-
                 <div className="progress-bar small">
                   <div className="progress-fill grey" style={{ width: "0%" }}></div>
                 </div>
@@ -168,7 +181,6 @@ const StudentDashboard = () => {
                 <p className="quiz-status cyan">Completed</p>
                 <h4>Intro to Python</h4>
                 <p className="small-muted">Beginner Track</p>
-
                 <div className="progress-bar small">
                   <div className="progress-fill cyan" style={{ width: "100%" }}></div>
                 </div>
@@ -177,12 +189,10 @@ const StudentDashboard = () => {
             </div>
           </div>
 
-          {/* RIGHT COLUMN — Progress + Badges */}
+          {/* RIGHT SIDEBAR */}
           <aside className="right-column">
-
             <div className="progress-box">
               <h3>Course Progress</h3>
-
               <div className="progress-list">
                 <p><span className="dot cyan"></span> Core Curriculum: 75%</p>
                 <p><span className="dot pink"></span> Advanced Topics: 50%</p>
@@ -192,7 +202,6 @@ const StudentDashboard = () => {
 
             <div className="badges-box">
               <h3>Cyber Badges</h3>
-
               <div className="badges-grid">
                 <div className="badge neon">💻</div>
                 <div className="badge neon">🔗</div>
@@ -202,8 +211,8 @@ const StudentDashboard = () => {
                 <div className="badge locked">🔒</div>
               </div>
             </div>
-
           </aside>
+
         </div>
       </main>
     </div>

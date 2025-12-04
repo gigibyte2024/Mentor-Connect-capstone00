@@ -9,7 +9,8 @@ import MentorProfile from "./MentorProfile";
 
 // NEW IMPORTS
 import Quizzes from "./Quizzes";
-import QuizPage from "./QuizPage"; // you will create this later
+import QuizPage from "./QuizPage";
+import ChatPage from "./ChatPage";   // 🔥 Added Chat Page import
 
 function App() {
   return (
@@ -30,9 +31,12 @@ function App() {
         {/* Mentor Profile */}
         <Route path="/mentor-profile" element={<MentorProfile />} />
 
-        {/* Quizzes Pages */}
+        {/* Quizzes */}
         <Route path="/quizzes" element={<Quizzes />} />
-        <Route path="/quiz/:id" element={<QuizPage />} />  {/* dynamic page */}
+        <Route path="/quiz/:id" element={<QuizPage />} />
+
+        {/* 🔥 Chat Page Route */}
+        <Route path="/chat" element={<ChatPage />} />
 
       </Routes>
     </BrowserRouter>
@@ -40,5 +44,3 @@ function App() {
 }
 
 export default App;
-
-

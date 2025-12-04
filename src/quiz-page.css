@@ -1,0 +1,148 @@
+/* FULL PAGE */
+.quizpage-wrapper {
+    background: #0a0c1a;
+    min-height: 100vh;
+  
+    /* NEW — perfect centering */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    padding: 40px;
+    color: white;
+    font-family: "Space Grotesk", sans-serif;
+  }
+  
+  /* NEW — wrapper specifically for instruction screen */
+  .instructions-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* ---------------- INSTRUCTIONS SCREEN ---------------- */
+  
+  .instructions-box {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid #00ffff50;
+    padding: 30px;
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+    text-align: center;
+    box-shadow: 0 0 20px #00ffff30;
+  }
+  
+  .instructions-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #00ffff;
+  }
+  
+  .instructions-list {
+    text-align: left;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    color: #d5fafa;
+  }
+  
+  .start-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #00ffff;
+    color: #0a0c1a;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 0 15px #00ffff90;
+  }
+  
+  .exit-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid #ffffff40;
+    color: #ffffff90;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  /* ---------------- QUIZ PAGE ---------------- */
+  
+  .quiz-box {
+    max-width: 700px;
+    margin: auto;
+    padding: 30px;
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid #00ffff40;
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+  }
+  
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-title {
+    font-size: 24px;
+    color: #00ffff;
+  }
+  
+  .quiz-timer {
+    font-size: 20px;
+    color: #ff00ff;
+  }
+  
+  .question-box {
+    margin-bottom: 20px;
+  }
+  
+  .question-text {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .option-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #00ffff40;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .option-item:hover {
+    background: rgba(0, 255, 255, 0.15);
+  }
+  
+  .option-item input {
+    margin-right: 10px;
+  }
+  
+  .quiz-footer {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .next-btn {
+    padding: 10px 20px;
+    background: #00ffff;
+    color: #0a0c1a;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
