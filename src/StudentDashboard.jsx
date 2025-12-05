@@ -7,7 +7,8 @@ const StudentDashboard = () => {
 
   return (
     <div className="student-wrapper">
-      {/* SIDEBAR */}
+
+      {/* ================= SIDEBAR ================= */}
       <aside className="student-sidebar">
 
         <div className="sidebar-logo">
@@ -18,34 +19,33 @@ const StudentDashboard = () => {
         <div className="sidebar-menu">
           <p className="menu-item active">📊 Dashboard</p>
 
-          {/* Discover Mentors */}
           <p
             className="menu-item"
             onClick={() => navigate("/student-mentors")}
-            style={{ cursor: "pointer" }}
           >
             👤 Discover Mentors
           </p>
 
-          {/* Quizzes */}
           <p
             className="menu-item"
             onClick={() => navigate("/quizzes")}
-            style={{ cursor: "pointer" }}
           >
             🧠 Quizzes
           </p>
 
-          {/* ⭐ CHAT BUTTON — UPDATED */}
           <p
             className="menu-item"
             onClick={() => navigate("/chat")}
-            style={{ cursor: "pointer" }}
           >
             💬 Chat
           </p>
 
-          <p className="menu-item">⚙ Profile</p>
+          <p
+            className="menu-item"
+            onClick={() => navigate("/profile")}
+          >
+            ⚙ Profile
+          </p>
         </div>
 
         <div className="sidebar-bottom">
@@ -64,10 +64,12 @@ const StudentDashboard = () => {
             </div>
           </div>
         </div>
+
       </aside>
 
-      {/* MAIN CONTENT */}
+      {/* ================= MAIN CONTENT ================= */}
       <main className="student-main">
+
         {/* TOP BAR */}
         <header className="topbar">
           <h1 className="top-title">Welcome Back, Jane!</h1>
@@ -90,7 +92,7 @@ const StudentDashboard = () => {
         {/* MAIN GRID */}
         <div className="main-grid">
 
-          {/* LEFT COLUMN */}
+          {/* ================= LEFT COLUMN ================= */}
           <div className="left-column">
 
             {/* Continue Your Quest */}
@@ -104,7 +106,7 @@ const StudentDashboard = () => {
               <p className="small-muted">Module 3: Backpropagation</p>
 
               <div className="progress-bar">
-                <div className="progress-fill" style={{ width: "45%" }}></div>
+                <div className="progress-fill" style={{ width: "45%" }} />
               </div>
             </div>
 
@@ -113,40 +115,43 @@ const StudentDashboard = () => {
 
             <div className="mentor-grid">
 
+              {/* Mentor 1 */}
               <div className="mentor-card">
                 <div
                   className="mentor-img"
                   style={{
                     backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7QCtQ6cNN1H0t8kYkGxZ1PH9DnOarmX1PhD10cJkaSyfXepaO9yKXEGwqLJf8W6MF0tlXaWkSrR5YMQfDah7lOyljDyP3PNc792OQU_9HygjTRiSwMQPKQ-9Ja9726KPs3wXe-zmt9eBdLYy5o8HHduFKosEAxfS1jbJrtKb4GDJf8HWl6aV88Dv-whrA1IRK0AAcomjRrA8A7jjS-sRrv4fhQVO0YFxwXQXDoTB-qtGacDBXUxqdPJ57mmsPwxqLkWyo--SOWnQ')",
+                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7QCtQ6cNN1H0t8kYkGxZ1PH9DnOarmX1PhD10cJkaSyfXepaO9yKXEGwqLJf8W6MF0tlXaWkSrR5YMQfDah7lOyljDyP3PNc792OQU_9HygjTRiSwMQPKQ-9Ja9726KPs3wXe-zmt9eBdLYy5o8HHduFKosEAxfS1jbJrtKb4GDJf8HWl6aV88Dv-whrA1IRK0AAcomjRrA8A7jjS-sRrv4fhQVO0YFxwXQXDoTB-qtGacDBXUxqdPJ57mmsPwxqLkWyo--SOWnQ')"
                   }}
-                ></div>
+                />
                 <p className="mentor-name">Alex "Cipher" Chen</p>
                 <p className="mentor-skill">AI Engineering</p>
                 <button className="connect-btn">Connect</button>
               </div>
 
+              {/* Mentor 2 */}
               <div className="mentor-card">
                 <div
                   className="mentor-img"
                   style={{
                     backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAd9C8GPkT8FFbQpcqXbV2f7_g_tHeiTGvPP-MC91dkMcjXLOoRskR1rUQp8P9S1VTDn0u99B7DymEGzHcj7Jp1nszHMcHa_-xPP-Gh1s-nu5OqCCeWlN46sJhxaNm244RSs86SfTMbwtN0H5XpOn2Dc3T7YVfDD3-pcuP1yUqRWFhsno38zvYqvnWsCXI_FuZdLt0jKOGzkmkKjGd6sNFppEn9EopwYPKUoVv4bEfkHhgIft6tj5sqnqYcVy3qZn3cNQO7WjmHJZM')",
+                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAd9C8GPkT8FFbQpcqXbV2f7_g_tHeiTGvPP-MC91dkMcjXLOoRskR1rUQp8P9S1VTDn0u99B7DymEGzHcj7Jp1nszHMcHa_-xPP-Gh1s-nu5OqCCeWlN46sJhxaNm244RSs86SfTMbwtN0H5XpOn2Dc3T7YVfDD3-pcuP1yUqRWFhsno38zvYqvnWsCXI_FuZdLt0jKOGzkmkKjGd6sNFppEn9EopwYPKUoVv4bEfkHhgIft6tj5sqnqYcVy3qZn3cNQO7WjmHJZM')"
                   }}
-                ></div>
+                />
                 <p className="mentor-name">Maya "Oracle" Ito</p>
                 <p className="mentor-skill">Quantum Computing</p>
                 <button className="connect-btn">Connect</button>
               </div>
 
+              {/* Mentor 3 */}
               <div className="mentor-card">
                 <div
                   className="mentor-img"
                   style={{
                     backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4ZfEL0PbMMN04MYwVw1xK8EAMN5Ul0vefLhray1Cs11XfaisucRougTHvvDi5FLfO37qI4Jhkw8FpIQ6pEktP9laqfKnjy87p7umqeI360eth68bsaKSaUyjrugADKLPGvDzfiimxvJvzC7SDHCQshH-QmnMJu0rcii_diKZ4yNPQUn8ehDuVU7NbM2Gr6gzl4vCFWqJCEZuR-Gwa2DDVyJuP3hpsRozulR_lb9R-YtphFKFoRiQaxow7xVC_WTWa962S7RNxQDk')",
+                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4ZfEL0PbMMN04MYwVw1xK8EAMN5Ul0vefLhray1Cs11XfaisucRougTHvvDi5FLfO37qI4Jhkw8FpIQ6pEktP9laqfKnjy87p7umqeI360eth68bsaKSaUyjrugADKLPGvDzfiimxvJvzC7SDHCQshH-QmnMJu0rcii_diKZ4yNPQUn8ehDuVU7NbM2Gr6gzl4vCFWqJCEZuR-Gwa2DDVyJuP3hpsRozulR_lb9R-YtphFKFoRiQaxow7xVC_WTWa962S7RNxQDk')"
                   }}
-                ></div>
+                />
                 <p className="mentor-name">Ben "Node" Carter</p>
                 <p className="mentor-skill">Web3 Development</p>
                 <button className="connect-btn">Connect</button>
@@ -154,45 +159,105 @@ const StudentDashboard = () => {
 
             </div>
 
-            {/* Quizzes */}
+            {/* Active Quizzes */}
             <div className="section-title">Active Quizzes</div>
 
             <div className="quiz-grid">
 
+              {/* Quiz 1 */}
               <div className="quiz-card">
                 <p className="quiz-status pink">In Progress</p>
                 <h4>Cryptography Basics</h4>
                 <p className="small-muted">Security Module</p>
+
                 <div className="progress-bar small">
-                  <div className="progress-fill pink" style={{ width: "75%" }}></div>
+                  <div
+                    className="progress-fill pink"
+                    style={{ width: "75%" }}
+                  />
                 </div>
               </div>
 
+              {/* Quiz 2 */}
               <div className="quiz-card">
                 <p className="quiz-status">Not Started</p>
                 <h4>Data Structures Challenge</h4>
                 <p className="small-muted">Core Curriculum</p>
+
                 <div className="progress-bar small">
-                  <div className="progress-fill grey" style={{ width: "0%" }}></div>
+                  <div
+                    className="progress-fill grey"
+                    style={{ width: "0%" }}
+                  />
                 </div>
               </div>
 
+              {/* Quiz 3 COMPLETED */}
               <div className="quiz-card disabled">
                 <p className="quiz-status cyan">Completed</p>
                 <h4>Intro to Python</h4>
                 <p className="small-muted">Beginner Track</p>
+
                 <div className="progress-bar small">
-                  <div className="progress-fill cyan" style={{ width: "100%" }}></div>
+                  <div
+                    className="progress-fill cyan"
+                    style={{ width: "100%" }}
+                  />
                 </div>
               </div>
 
             </div>
+
           </div>
 
-          {/* RIGHT SIDEBAR */}
+          {/* ================= RIGHT SIDEBAR ================= */}
           <aside className="right-column">
+
+            {/* ARC PROGRESS */}
             <div className="progress-box">
               <h3>Course Progress</h3>
+
+              <div className="arc-container">
+                <svg viewBox="0 0 100 50" className="arc-svg">
+
+                  {/* Main base arc */}
+                  <path d="M 10 50 A 40 40 0 0 1 90 50" className="arc-track" />
+
+                  {/* CYAN arc 75% */}
+                  <path
+                    d="M 10 50 A 40 40 0 0 1 90 50"
+                    className="arc-primary"
+                    style={{
+                      strokeDasharray: "125.6",
+                      strokeDashoffset: "31.4"
+                    }}
+                  />
+
+                  {/* MAGENTA arc */}
+                  <path d="M 20 50 A 30 30 0 0 1 80 50" className="arc-track" />
+                  <path
+                    d="M 20 50 A 30 30 0 0 1 80 50"
+                    className="arc-magenta"
+                    style={{
+                      strokeDasharray: "94.2",
+                      strokeDashoffset: "47.1"
+                    }}
+                  />
+
+                  {/* VIOLET arc */}
+                  <path d="M 30 50 A 20 20 0 0 1 70 50" className="arc-track" />
+                  <path
+                    d="M 30 50 A 20 20 0 0 1 70 50"
+                    className="arc-violet"
+                    style={{
+                      strokeDasharray: "62.8",
+                      strokeDashoffset: "50.24"
+                    }}
+                  />
+
+                </svg>
+              </div>
+
               <div className="progress-list">
                 <p><span className="dot cyan"></span> Core Curriculum: 75%</p>
                 <p><span className="dot pink"></span> Advanced Topics: 50%</p>
@@ -200,8 +265,10 @@ const StudentDashboard = () => {
               </div>
             </div>
 
+            {/* BADGES */}
             <div className="badges-box">
               <h3>Cyber Badges</h3>
+
               <div className="badges-grid">
                 <div className="badge neon">💻</div>
                 <div className="badge neon">🔗</div>
@@ -211,10 +278,13 @@ const StudentDashboard = () => {
                 <div className="badge locked">🔒</div>
               </div>
             </div>
+
           </aside>
 
         </div>
+
       </main>
+
     </div>
   );
 };

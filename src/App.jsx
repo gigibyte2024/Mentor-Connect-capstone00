@@ -2,41 +2,53 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Landing from "./Landing";
 import Auth from "./Auth";
+
 import MentorDashboard from "./MentorDashboard";
 import StudentDashboard from "./StudentDashboard";
+
 import StudentMentorDiscover from "./StudentMentorDiscover";
 import MentorProfile from "./MentorProfile";
 
-// NEW IMPORTS
+// QUIZ SYSTEM
 import Quizzes from "./Quizzes";
 import QuizPage from "./QuizPage";
-import ChatPage from "./ChatPage";   // 🔥 Added Chat Page import
+
+// CHAT SYSTEM
+import ChatPage from "./ChatPage";
+
+// ⭐ PROFILE SETTINGS PAGE
+import ProfileSettings from "./ProfileSettings";  
+import MentorResources from "./MentorResources";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Landing & Auth */}
+        {/* LANDING + AUTH */}
         <Route path="/" element={<Landing />} />
         <Route path="/auth" element={<Auth />} />
 
-        {/* Dashboards */}
+        {/* DASHBOARDS */}
         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
 
-        {/* Student → Discover Mentors */}
+        {/* STUDENT FEATURES */}
         <Route path="/student-mentors" element={<StudentMentorDiscover />} />
-
-        {/* Mentor Profile */}
         <Route path="/mentor-profile" element={<MentorProfile />} />
 
-        {/* Quizzes */}
+        {/* QUIZZES */}
         <Route path="/quizzes" element={<Quizzes />} />
         <Route path="/quiz/:id" element={<QuizPage />} />
 
-        {/* 🔥 Chat Page Route */}
+        {/* CHAT PAGE */}
         <Route path="/chat" element={<ChatPage />} />
+
+        {/* ⭐ PROFILE SETTINGS ROUTE */}
+        <Route path="/profile" element={<ProfileSettings />} />
+
+        <Route path="/mentor-resources" element={<MentorResources />} />
+
 
       </Routes>
     </BrowserRouter>

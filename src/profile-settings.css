@@ -1,0 +1,260 @@
+/* ==== WRAPPER ==== */
+
+.profile-wrapper {
+    background: #0a192f;
+    min-height: 100vh;
+    color: white;
+    font-family: "Space Grotesk", sans-serif;
+    padding: 40px;
+  }
+  
+  .profile-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1400px;
+    margin: auto;
+  }
+  
+  /* ==== SIDEBAR ==== */
+  
+  .profile-sidebar {
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  /* Avatar Upload */
+  .avatar-box {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #06f9f9;
+    text-align: center;
+  }
+  
+  .avatar-wrapper {
+    position: relative;
+    width: 160px;
+    margin: auto;
+  }
+  
+  .avatar-frame {
+    position: relative;
+    padding: 8px;
+    border-radius: 50%;
+    background: linear-gradient(to top right, #06f9f9, #ff00ff);
+  }
+  
+  .avatar-img {
+    width: 100%;
+    height: 160px;
+    background-size: cover;
+    border-radius: 50%;
+  }
+  
+  .avatar-hover {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 249, 249, 0.25);
+    opacity: 0;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+  }
+  
+  .avatar-frame:hover .avatar-hover {
+    opacity: 1;
+  }
+  
+  .upload-icon {
+    font-size: 36px;
+  }
+  
+  .avatar-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid #06f9f9;
+    opacity: 0.5;
+    animation: pulse 2s infinite ease-in-out;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.15); opacity: 0; }
+  }
+  
+  .profile-title {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+  
+  .profile-sub {
+    color: #06f9f9;
+    opacity: 0.75;
+  }
+  
+  /* Sidebar Navigation */
+  
+  .settings-nav {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid #06f9f9;
+    padding: 20px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .nav-item {
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .nav-item:hover {
+    background: rgba(6, 249, 249, 0.1);
+  }
+  
+  .nav-item.active {
+    background: rgba(6, 249, 249, 0.2);
+    border: 1px solid #06f9f9;
+  }
+  
+  .nav-icon {
+    font-size: 22px;
+  }
+  
+  /* ==== RIGHT SIDE CONTENT ==== */
+  
+  .profile-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .info-card {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 30px;
+    border: 1px solid #06f9f9;
+    border-radius: 16px;
+  }
+  
+  .info-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #06f9f9;
+  }
+  
+  .info-title {
+    font-size: 32px;
+    font-weight: 800;
+  }
+  
+  /* Form Grid */
+  
+  .info-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group.full {
+    grid-column: span 2;
+  }
+  
+  .input-group label {
+    margin-bottom: 8px;
+    color: #d2d2d2;
+  }
+  
+  .input-field,
+  .input-area {
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-bottom: 2px solid #06f9f9;
+    padding: 14px;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+  }
+  
+  .input-field:focus,
+  .input-area:focus {
+    box-shadow: 0 0 10px #06f9f9;
+  }
+  
+  .input-area {
+    min-height: 140px;
+    resize: vertical;
+  }
+  
+  /* ACTION BUTTONS */
+  
+  .actions-box {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+  }
+  
+  .discard-btn {
+    background: transparent;
+    color: #cccccc;
+    padding: 12px 25px;
+    border-radius: 10px;
+  }
+  
+  .save-btn {
+    background: #06f9f9;
+    color: #0a192f;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 0 12px #06f9f9;
+  }
+  
+  /* DANGER ZONE */
+  
+  .danger-box {
+    background: rgba(255, 0, 0, 0.15);
+    border: 1px solid red;
+    padding: 25px;
+    border-radius: 14px;
+  }
+  
+  .danger-title {
+    color: #ff6b6b;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .danger-text {
+    opacity: 0.75;
+    margin-top: 6px;
+    max-width: 600px;
+  }
+  
+  .delete-btn {
+    background: rgba(255, 0, 0, 0.9);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  

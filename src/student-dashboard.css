@@ -1,78 +1,80 @@
-/* =============== GLOBAL WRAPPER =============== */
+/* =========================================================
+   GLOBAL WRAPPER
+   ========================================================= */
 
-.student-wrapper {
+   .student-wrapper {
     width: 100%;
     height: 100vh;
     background: #0A0F1A;
     display: flex;
-    color: #e2e2e2;
     font-family: "Space Grotesk", sans-serif;
+    color: #e2e2e2;
     overflow: hidden;
   }
   
-  /* ================= SIDEBAR ================= */
+  /* =========================================================
+     SIDEBAR
+     ========================================================= */
   
   .student-sidebar {
     width: 250px;
-    background: rgba(16, 24, 40, 0.7);
-    border-right: 1px solid #1f2c40;
+    background: rgba(16, 24, 40, 0.55);
+    border-right: 1px solid #202c40;
+    padding: 25px 20px;
     display: flex;
     flex-direction: column;
-    padding: 25px 20px;
   }
   
-  .sidebar-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  /* Sidebar Logo */
+  .logo-icon-svg {
+    width: 26px;
     color: cyan;
-    margin-bottom: 40px;
-  }
-  
-  .logo-icon {
-    width: 25px;
-    height: 25px;
-    background: cyan;
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%);
-    filter: drop-shadow(0 0 5px cyan);
+    filter: drop-shadow(0 0 4px cyan);
   }
   
   .logo-text {
     font-size: 20px;
     font-weight: 700;
-    letter-spacing: -0.5px;
   }
   
-  /* MENU */
-  
+  /* Sidebar Menu Items */
   .sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    margin-top: 25px;
+    gap: 8px;
   }
   
   .menu-item {
-    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
     border-radius: 8px;
-    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
     cursor: pointer;
-    color: rgba(255,255,255,0.7);
     transition: 0.2s;
   }
   
   .menu-item:hover {
-    background: rgba(0,255,255,0.15);
-    color: white;
+    background: rgba(0, 255, 255, 0.15);
+    color: cyan;
   }
   
   .menu-item.active {
-    background: rgba(0,255,255,0.3);
+    background: rgba(0, 255, 255, 0.25);
+    border: 1px solid rgba(0, 255, 255, 0.4);
     color: cyan;
     font-weight: 600;
   }
   
-  /* SIDEBAR BOTTOM */
+  .material-icon {
+    font-family: 'Material Symbols Outlined';
+    font-size: 20px;
+    color: cyan;
+  }
   
+  /* Sidebar Bottom User Section */
   .sidebar-bottom {
     margin-top: auto;
   }
@@ -86,15 +88,14 @@
   .student-avatar {
     width: 48px;
     height: 48px;
-    border-radius: 50%;
     background-size: cover;
+    border-radius: 50%;
     border: 2px solid cyan;
-    filter: drop-shadow(0 0 5px cyan);
+    filter: drop-shadow(0 0 7px cyan);
   }
   
   .student-name {
     color: white;
-    font-size: 15px;
     font-weight: 600;
   }
   
@@ -103,7 +104,9 @@
     font-size: 13px;
   }
   
-  /* ================= MAIN SECTION ================= */
+  /* =========================================================
+     MAIN AREA + TOPBAR
+     ========================================================= */
   
   .student-main {
     flex: 1;
@@ -111,12 +114,11 @@
     flex-direction: column;
   }
   
-  /* ================= TOPBAR ================= */
-  
+  /* Top Bar */
   .topbar {
-    height: 70px;
-    background: rgba(16, 24, 40, 0.7);
-    border-bottom: 1px solid #1f2c40;
+    height: 75px;
+    background: rgba(16, 24, 40, 0.55);
+    border-bottom: 1px solid #202c40;
     padding: 0 35px;
     display: flex;
     align-items: center;
@@ -124,268 +126,337 @@
   }
   
   .top-title {
-    color: white;
     font-size: 22px;
     font-weight: 700;
+    color: white;
   }
   
-  .top-stats {
+  .top-stats-wrapper {
     display: flex;
     align-items: center;
     gap: 20px;
   }
   
-  .stats-box {
+  /* Points & Level Box */
+  .points-box,
+  .level-box {
     display: flex;
     align-items: center;
-    gap: 5px;
-    background: rgba(0,255,255,0.1);
-    border: 1px solid rgba(0,255,255,0.3);
-    padding: 8px 12px;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
     border-radius: 8px;
   }
   
-  .cyan-text {
+  .highlight {
     color: cyan;
     font-weight: 700;
   }
   
+  /* XP BAR */
+  .xp-bar-container {
+    width: 160px;
+  }
+  
+  .xp-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  
+  .xp-bar {
+    width: 100%;
+    height: 8px;
+    background: #203040;
+    border-radius: 6px;
+    margin-top: 3px;
+    overflow: hidden;
+  }
+  
+  .xp-fill {
+    width: 65%;
+    height: 100%;
+    background: cyan;
+    border-radius: 6px;
+    box-shadow: 0 0 8px cyan;
+  }
+  
+  /* Notification Button */
   .notif-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: rgba(0,255,255,0.12);
-    border: 1px solid rgba(0,255,255,0.3);
+    width: 42px;
+    height: 42px;
+    background: rgba(0, 255, 255, 0.15);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .notif-btn:hover {
-    background: rgba(0,255,255,0.22);
+    background: rgba(0, 255, 255, 0.25);
   }
   
-  /* ================= GRID ================= */
+  /* =========================================================
+     MAIN GRID
+     ========================================================= */
   
   .main-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    margin-top: 20px;
     padding: 25px;
-    gap: 25px;
-    height: calc(100vh - 90px);
+    gap: 30px;
+    height: calc(100vh - 95px);
     overflow-y: auto;
   }
   
-  /* LEFT COLUMN */
-  
+  /* Left Column */
   .left-column {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
   }
   
-  /* SECTION BOX */
-  
-  .section-box {
-    background: rgba(0,255,255,0.05);
-    border: 1px solid rgba(0,255,255,0.2);
-    padding: 25px;
-    border-radius: 12px;
-  }
-  
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .section-header h3 {
-    font-size: 20px;
+  /* Section Titles */
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: -10px;
     color: white;
+  }
+  
+  /* Section Header Block */
+  .section-header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
   .continue-btn {
     padding: 8px 15px;
-    background: rgba(0,255,255,0.2);
-    border: 1px solid rgba(0,255,255,0.3);
-    color: cyan;
-    font-weight: bold;
     border-radius: 8px;
+    background: rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    color: cyan;
     cursor: pointer;
+    font-weight: bold;
   }
   
   .continue-btn:hover {
-    background: rgba(0,255,255,0.3);
+    background: rgba(0, 255, 255, 0.35);
+  }
+  
+  /* Quest Box */
+  .quest-block {
+    background: rgba(0, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    padding: 25px;
+    border-radius: 12px;
   }
   
   .small-muted {
     font-size: 12px;
-    color: #bbb;
+    color: #aaa;
   }
   
+  /* Progress Bars */
   .progress-bar {
     width: 100%;
-    height: 10px;
-    background: #1f2c40;
-    border-radius: 5px;
+    height: 12px;
+    background: #203040;
+    border-radius: 8px;
     margin-top: 10px;
     overflow: hidden;
   }
   
   .progress-fill {
+    width: 45%;
     height: 100%;
     background: cyan;
-    border-radius: 5px;
-    box-shadow: 0 0 8px cyan;
+    border-radius: 8px;
+    box-shadow: 0 0 10px cyan;
   }
-  
-  .progress-fill.pink {
-    background: magenta;
-    box-shadow: 0 0 8px magenta;
-  }
-  
-  .progress-fill.grey {
-    background: #666;
-  }
-  
-  .progress-fill.cyan {
-    background: cyan;
-  }
-  
-  /* SECTION TITLE */
-  
-  .section-title {
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: -10px;
-  }
-  
-  /* ============= MENTOR CARDS ============= */
-  
-  .mentor-grid {
+
+
+/* =========================================================
+   MENTOR GRID
+   ========================================================= */
+
+   .mentor-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 22px;
   }
   
   .mentor-card {
-    background: rgba(0,255,255,0.05);
-    border: 1px solid rgba(0,255,255,0.2);
+    background: rgba(0, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.25);
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 14px;
     text-align: center;
-    transition: 0.2s;
+    transition: 0.25s;
   }
   
   .mentor-card:hover {
     border-color: cyan;
-    box-shadow: 0 0 10px rgba(0,255,255,0.3);
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
   }
   
   .mentor-img {
     width: 90px;
     height: 90px;
     background-size: cover;
-    margin: 0 auto 10px;
+    margin: 0 auto 12px;
     border-radius: 50%;
     border: 2px solid cyan;
+    box-shadow: 0 0 10px cyan;
   }
   
   .mentor-name {
     color: white;
-    font-weight: bold;
+    font-weight: 600;
+    margin-bottom: 4px;
   }
   
   .mentor-skill {
     font-size: 13px;
     color: cyan;
+    margin-bottom: 10px;
   }
   
   .connect-btn {
     width: 100%;
-    margin-top: 10px;
     padding: 8px;
-    background: rgba(0,255,255,0.15);
-    color: cyan;
-    border: 1px solid rgba(0,255,255,0.3);
+    background: rgba(0, 255, 255, 0.17);
     border-radius: 8px;
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    color: cyan;
+    font-weight: 600;
     cursor: pointer;
   }
   
   .connect-btn:hover {
-    background: rgba(0,255,255,0.25);
+    background: rgba(0, 255, 255, 0.3);
   }
   
-  /* ============= QUIZ SECTION ============= */
+  /* =========================================================
+     ACTIVE QUIZZES
+     ========================================================= */
   
   .quiz-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 22px;
   }
   
   .quiz-card {
-    background: rgba(0,255,255,0.06);
-    border: 1px solid rgba(0,255,255,0.2);
-    padding: 20px;
-    border-radius: 12px;
+    background: rgba(0, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    padding: 22px;
+    border-radius: 14px;
+    transition: 0.2s;
+  }
+  
+  .quiz-card:hover {
+    border-color: cyan;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
   }
   
   .quiz-card.disabled {
-    opacity: 0.5;
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   
   .quiz-status {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 5px;
   }
   
-  .quiz-status.pink {
-    color: magenta;
+  .quiz-status.pink { color: magenta; }
+  .quiz-status.cyan { color: cyan; }
+  
+  .quiz-percent {
+    font-size: 12px;
+    color: #bbb;
+    margin-left: 8px;
   }
   
-  .quiz-status.cyan {
-    color: cyan;
+  /* small progress bar inside quiz cards */
+  .quiz-progress-bar {
+    width: 100%;
+    height: 6px;
+    border-radius: 6px;
+    background: #203040;
+    margin-top: 10px;
+    overflow: hidden;
   }
   
-  /* Right Column */
+  .quiz-progress-fill {
+    height: 100%;
+    border-radius: 6px;
+  }
+  
+  .quiz-progress-fill.pink {
+    background: magenta;
+  }
+  
+  .quiz-progress-fill.grey {
+    background: #666;
+  }
+  
+  .quiz-progress-fill.cyan {
+    background: cyan;
+  }
+  
+  /* =========================================================
+     RIGHT SIDEBAR
+     ========================================================= */
   
   .right-column {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 28px;
   }
   
-  .progress-box,
-  .badges-box {
-    background: rgba(0,255,255,0.05);
-    border: 1px solid rgba(0,255,255,0.2);
-    padding: 20px;
-    border-radius: 12px;
+  /* ===== Progress Box ===== */
+  
+  .progress-box {
+    background: rgba(0, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    padding: 22px;
+    border-radius: 14px;
   }
   
-  .progress-box h3,
-  .badges-box h3 {
-    font-size: 20px;
+  .progress-box h3 {
     color: white;
+    font-size: 20px;
     margin-bottom: 15px;
   }
   
-  /* PROGRESS LIST */
+  /* ARC SVG Wrapper */
+  .arc-wrapper {
+    height: 160px;
+    position: relative;
+  }
+  
+  .progress-list {
+    margin-top: 15px;
+  }
   
   .progress-list p {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: white;
   }
   
   .dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 3px;
-    display: inline-block;
   }
   
   .dot.cyan {
@@ -403,33 +474,141 @@
     box-shadow: 0 0 5px #8F00FF;
   }
   
-  /* BADGES */
+  /* =========================================================
+     CYBER BADGES BOX
+     ========================================================= */
+  
+  .badges-box {
+    background: rgba(0, 255, 255, 0.06);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    padding: 22px;
+    border-radius: 14px;
+  }
+  
+  .badges-box h3 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
   
   .badges-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 18px;
   }
   
   .badge {
     height: 80px;
-    border-radius: 10px;
-    background: rgba(0,255,255,0.1);
-    border: 1px solid rgba(0,255,255,0.3);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 34px;
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    background: rgba(0, 255, 255, 0.1);
   }
   
   .badge.neon {
-    box-shadow: 0 0 10px cyan;
     color: cyan;
+    box-shadow: 0 0 10px cyan;
   }
   
   .badge.locked {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #333;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #444;
     color: #666;
   }
+
   
+  /* =========================================================
+   SEMICIRCLE ARC PROGRESS (Course Progress)
+   ========================================================= */
+
+.arc-container {
+  position: relative;
+  width: 100%;
+  height: 160px;
+}
+
+.arc-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.arc-track {
+  stroke: #1f2c40;
+  stroke-width: 4;
+  fill: none;
+}
+
+.arc-primary {
+  stroke: cyan;
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px cyan);
+}
+
+.arc-magenta {
+  stroke: magenta;
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px magenta);
+}
+
+.arc-violet {
+  stroke: #8F00FF;
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px #8F00FF);
+}
+
+/* =========================================================
+   BADGE HOVER EFFECTS
+   ========================================================= */
+
+.badge.neon:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 15px cyan;
+  transition: 0.2s ease;
+}
+
+.badge.locked:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #333;
+}
+
+/* =========================================================
+   SMOOTH SCROLL & GRID POLISH
+   ========================================================= */
+
+.main-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-grid::-webkit-scrollbar-thumb {
+  background: rgba(0,255,255,0.25);
+  border-radius: 10px;
+}
+
+.main-grid::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+}
+
+/* =========================================================
+   FINISHING TOUCHES
+   ========================================================= */
+
+.section-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mentor-card,
+.quiz-card {
+  backdrop-filter: blur(8px);
+}
+
+.progress-box,
+.badges-box {
+  backdrop-filter: blur(8px);
+}

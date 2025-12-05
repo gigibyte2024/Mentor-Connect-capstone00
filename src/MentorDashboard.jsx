@@ -1,7 +1,10 @@
 import React from "react";
 import "./mentor-dashboard.css";
+import { useNavigate } from "react-router-dom";
 
 const MentorDashboard = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="dashboard-wrapper">
 
@@ -23,16 +26,27 @@ const MentorDashboard = () => {
             </div>
           </div>
 
+          {/* MENU */}
           <nav className="sidebar-menu">
             <a className="menu-item active">📊 Dashboard</a>
             <a className="menu-item">👥 Students</a>
             <a className="menu-item">📨 Requests</a>
             <a className="menu-item">💬 Chat</a>
-            <a className="menu-item">📁 Resources</a>
+
+            {/* ⭐ UPDATED: RESOURCES NOW NAVIGATES */}
+            <a
+              className="menu-item"
+              onClick={() => navigate("/mentor-resources")}
+              style={{ cursor: "pointer" }}
+            >
+              📁 Resources
+            </a>
+
             <a className="menu-item">👤 Profile</a>
           </nav>
         </div>
 
+        {/* BOTTOM */}
         <div className="sidebar-bottom">
           <a className="menu-item">⚙ Settings</a>
           <a className="menu-item">🚪 Logout</a>
@@ -42,7 +56,7 @@ const MentorDashboard = () => {
       {/* MAIN SECTION */}
       <div className="main">
 
-        {/* TOP NAV */}
+        {/* TOP NAV BAR */}
         <header className="topbar">
           <div className="topbar-left">
             <div className="logo-icon"></div>
@@ -68,6 +82,7 @@ const MentorDashboard = () => {
 
           <h1 className="page-title">Mentor Hub</h1>
 
+          {/* GRID */}
           <div className="grid">
 
             {/* LEFT COLUMN */}
@@ -92,7 +107,7 @@ const MentorDashboard = () => {
                 <p className="stat-change">+0.1 this month</p>
               </div>
 
-              {/* UPCOMING SESSIONS */}
+              {/* Upcoming Sessions */}
               <div className="session-box">
                 <h2 className="session-title">Upcoming Sessions</h2>
 
