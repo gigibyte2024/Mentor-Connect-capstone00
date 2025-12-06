@@ -16,9 +16,8 @@ import QuizPage from "./QuizPage";
 // CHAT SYSTEM
 import ChatPage from "./ChatPage";
 
-// ⭐ PROFILE SETTINGS PAGE
-import ProfileSettings from "./ProfileSettings";  
-import MentorResources from "./MentorResources";
+// ⭐ PROFILE SETTINGS
+import ProfileSettings from "./ProfileSettings";
 
 function App() {
   return (
@@ -44,11 +43,11 @@ function App() {
         {/* CHAT PAGE */}
         <Route path="/chat" element={<ChatPage />} />
 
-        {/* ⭐ PROFILE SETTINGS ROUTE */}
+        {/* PROFILE SETTINGS */}
         <Route path="/profile" element={<ProfileSettings />} />
 
-        <Route path="/mentor-resources" element={<MentorResources />} />
-
+        {/* ❌ REMOVED MENTOR RESOURCES ROUTE */}
+        {/* It is now an internal component, not a separate page */}
 
       </Routes>
     </BrowserRouter>

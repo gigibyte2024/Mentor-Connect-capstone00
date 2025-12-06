@@ -1,0 +1,238 @@
+/* MAIN LAYOUT */
+.layout {
+    display: flex;
+    height: 100vh;
+    background: #0f1b1b;
+    color: white;
+    font-family: sans-serif;
+  }
+  
+  /* SIDEBAR */
+  .sidebar {
+    width: 230px;
+    padding: 20px;
+    background: #112626;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sidebar-heading {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  /* DROPDOWN */
+  .dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 10px;
+  }
+  
+  .dropdown-item {
+    background: #1d3e3e;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .dropdown-item:hover {
+    background: #275757;
+  }
+  
+  /* MAIN CONTENT */
+  .main {
+    flex: 1;
+    padding: 30px;
+  }
+  
+  .page-title {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+  
+  .empty-text {
+    color: #93b5b5;
+    margin-bottom: 20px;
+  }
+  
+  /* RESOURCE GRID */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  
+  .resource-card {
+    background: #204141;
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: 0.2s;
+  }
+  
+  .resource-card:hover {
+    border-color: #44f0cc;
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .res-title {
+    font-size: 18px;
+    margin: 0;
+  }
+  
+  .res-desc {
+    margin: 4px 0;
+    color: #9edada;
+    font-size: 14px;
+  }
+  
+  .res-icon {
+    font-size: 30px;
+    color: #44f0cc;
+  }
+  
+  /* CATEGORY TAG */
+  .tag {
+    background: rgba(68, 240, 204, 0.2);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #44f0cc;
+    margin-top: 10px;
+    display: inline-block;
+  }
+  
+  /* LOGOUT BUTTON */
+  .logout-btn {
+    background: #44f0cc;
+    padding: 10px;
+    border-radius: 6px;
+    color: #112626;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .logout-btn:hover {
+    opacity: 0.9;
+  }
+  
+
+  /* ===========================
+   MODAL
+=========================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+  
+  .modal-box {
+    width: 420px;
+    background: #163333;
+    padding: 25px;
+    border-radius: 12px;
+    color: white;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+  
+  .modal-title {
+    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .modal-label {
+    font-size: 14px;
+    margin-top: 10px;
+    display: block;
+  }
+  
+  .modal-input,
+  .modal-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    margin-top: 6px;
+    background: #102626;
+    color: white;
+  }
+  
+  .modal-textarea {
+    height: 80px;
+    resize: none;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  
+  .cancel-btn {
+    background: #355050;
+    padding: 8px 14px;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .save-btn {
+    background: #44f0cc;
+    padding: 8px 14px;
+    border: none;
+    color: #112626;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  /* Modal Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  
+  /* ===========================
+     TOAST
+  =========================== */
+  .toast-box {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #44f0cc;
+    color: #102323;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    animation: slideUp 0.4s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
