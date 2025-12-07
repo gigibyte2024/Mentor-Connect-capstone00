@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./student-dashboard.css";
 import { useNavigate } from "react-router-dom";
-import API from "../api/axiosInstance"; 
-import { getMyProfile } from "../api/user"; 
-import { getMentors } from "../api/mentor";  
+import API from "./api/axiosInstance"; 
+import { getMyProfile } from "./api/user"; 
+import { getMentors } from "./api/mentor"; 
+
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
