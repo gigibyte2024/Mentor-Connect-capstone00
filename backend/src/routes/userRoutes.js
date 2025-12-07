@@ -7,18 +7,37 @@ import {
   deleteUser 
 } from "../controllers/userController.js";
 
+import { protectRoute } from "../middleware/protectRoute.js";
+
 const router = express.Router();
 
-// GET logged-in user
-router.get("/me", getMe);
+/** ------------------------------
+ *  GET LOGGED-IN USER PROFILE
+ *  @route GET /api/users/me
+ *  @access Private
+ --------------------------------*/
+router.get("/me", protectRoute, getMe);
 
-// Fetch all users (search, sort, filter, pagination)
-router.get("/", getUsers);
+/** ------------------------------
+ *  GET ALL USERS (search, sort, filter, pagination)
+ *  @route GET /api/users
+ *  @access Private (Mentors/Admin)
+ --------------------------------*/
+router.get("/", protectRoute, getUsers);
 
-// Update logged-in user profile
-router.put("/", updateUser);
+/** ------------------------------
+ *  UPDATE LOGGED-IN USER
+ *  @route PUT /api/users/update
+ *  @body { name, email, password, ... }
+ *  @access Private
+ --------------------------------*/
+router.put("/update", protectRoute, updateUser);
 
-// Delete logged-in user
-router.delete("/", deleteUser);
+/** ------------------------------
+ *  DELETE LOGGED-IN USER
+ *  @route DELETE /api/users/delete
+ *  @access Private
+ --------------------------------*/
+router.delete("/delete", protectRoute, deleteUser);
 
 export default router;
