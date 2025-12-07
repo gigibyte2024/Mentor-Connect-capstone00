@@ -1,66 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./quizzes.css";
 import { useNavigate } from "react-router-dom";
+import API from "./api/axiosInstance";
 
 const Quizzes = () => {
   const navigate = useNavigate();
+  const [quizzes, setQuizzes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const quizzes = [
-    {
-      id: 1,
-      title: "Advanced CSS Grid",
-      xp: "+250 XP",
-      pts: "+50 PTS",
-      progress: 75,
-      icon: "code_blocks",
-      color: "green",
-    },
-    {
-      id: 2,
-      title: "JavaScript Promises",
-      xp: "+300 XP",
-      pts: "+75 PTS",
-      progress: 25,
-      icon: "javascript",
-      color: "yellow",
-    },
-    {
-      id: 3,
-      title: "UI/UX Fundamentals",
-      xp: "+150 XP",
-      pts: "+30 PTS",
-      progress: 0,
-      icon: "brush",
-      color: "green",
-    },
-    {
-      id: 4,
-      title: "Cybersecurity Basics",
-      xp: "+400 XP",
-      pts: "+100 PTS",
-      progress: 100,
-      icon: "security",
-      color: "red",
-    },
-    {
-      id: 5,
-      title: "Python Data Structures",
-      xp: "+350 XP",
-      pts: "+80 PTS",
-      progress: 0,
-      icon: "data_object",
-      color: "yellow",
-    },
-    {
-      id: 6,
-      title: "React State Management",
-      xp: "+450 XP",
-      pts: "+120 PTS",
-      progress: 50,
-      icon: "hub",
-      color: "red",
-    },
-  ];
+  // ---------------- FETCH QUIZZES FROM BACKEND ----------------
+  const fetchQuizzes = async () => {
+    try {
+      const res = await API.get("/quiz"); // GET /api/quiz (backend sends all quiz topics)
+      setQuizzes(res.data);
+    } catch (err) {
+      console.error("Fetch Quiz Error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuizzes();
+  }, []);
 
   return (
     <div className="quizzes-page">
@@ -115,52 +77,50 @@ const Quizzes = () => {
 
       {/* QUIZ GRID */}
       <div className="quiz-grid">
-        {quizzes.map((q) => (
-          <div
-            key={q.id}
-            className="quiz-card"
-            onClick={() => navigate(`/quiz/${q.id}`)}
-          >
-            {/* SIDE BAR */}
-            <div className={`quiz-bar bar-${q.color}`}></div>
+        {loading && <p style={{ color: "#fff" }}>Loading quizzes...</p>}
 
-            <div className="quiz-top">
-              {/* MATERIAL ICONS FIXED */}
-              <span className="quiz-icon material-symbols-outlined">
-                {q.icon}
-              </span>
+        {!loading &&
+          quizzes.map((q) => (
+            <div
+              key={q.id}
+              className="quiz-card"
+              onClick={() => navigate(`/quiz/${q.id}`)}
+            >
+              <div className={`quiz-bar bar-green`}></div>
 
-              {/* PROGRESS RING */}
-              <div className="progress-circle">
-                <svg width="44" height="44">
-                  <circle cx="22" cy="22" r="18" className="circle-bg" />
-                  <circle
-                    cx="22"
-                    cy="22"
-                    r="18"
-                    className="circle-progress"
-                    style={{
-                      strokeDashoffset: `calc(113 - (113 * ${q.progress}) / 100)`,
-                    }}
-                  />
-                </svg>
-                <div className="progress-text">
-                  {q.progress === 100 ? "✔" : `${q.progress}%`}
+              <div className="quiz-top">
+                {/* ICON */}
+                <span className="quiz-icon material-symbols-outlined">
+                  menu_book
+                </span>
+
+                {/* PROGRESS RING ALWAYS 0 FOR NOW */}
+                <div className="progress-circle">
+                  <svg width="44" height="44">
+                    <circle cx="22" cy="22" r="18" className="circle-bg" />
+                    <circle
+                      cx="22"
+                      cy="22"
+                      r="18"
+                      className="circle-progress"
+                      style={{ strokeDashoffset: `113` }}
+                    />
+                  </svg>
+                  <div className="progress-text">0%</div>
                 </div>
               </div>
-            </div>
 
-            <p className="quiz-name">{q.title}</p>
+              <p className="quiz-name">{q.topic}</p>
 
-            <div className="quiz-rewards">
-              <span className="reward">{q.xp}</span>
-              <span className="reward">{q.pts}</span>
+              <div className="quiz-rewards">
+                <span className="reward">+100 XP</span>
+                <span className="reward">+20 PTS</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
-      {/* PAGINATION */}
+      {/* PAGINATION (dummy for now) */}
       <div className="pagination">
         <button className="page-arrow">‹</button>
         <button className="page-number active">1</button>

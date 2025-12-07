@@ -1,47 +1,78 @@
-// src/controllers/mentorController.js
-import { prisma } from "../utils/prisma.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-// ------------------ CREATE MENTOR PROFILE ------------------
-export const createMentor = async (req, res) => {
+// ----------------------------------------------------------------------
+// GET ALL MENTORS WITH SEARCH + SORT + PAGINATION  (FULL API)
+// ----------------------------------------------------------------------
+export const getMentors = async (req, res) => {
   try {
-    const { skills, experience } = req.body;
+    let { search = "", sort = "rating", page = 1, limit = 6 } = req.query;
 
-    const mentor = await prisma.mentor.create({
-      data: {
-        skills,
-        experience,
-        userId: req.user.id
-      }
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    // COUNT total mentors
+    const totalMentors = await prisma.mentor.count({
+      where: {
+        skills: { contains: search, mode: "insensitive" },
+      },
     });
 
-    res.json(mentor);
+    const totalPages = Math.ceil(totalMentors / limit);
+
+    // FETCH mentors
+    const mentors = await prisma.mentor.findMany({
+      where: {
+        skills: { contains: search, mode: "insensitive" },
+      },
+      orderBy: { [sort]: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+      include: { user: true },
+    });
+
+    return res.json({
+      mentors,
+      totalPages,
+      currentPage: page,
+    });
   } catch (err) {
-    res.status(500).json({ message: "Mentor creation failed" });
+    console.error("Get Mentors Error:", err);
+    res.status(500).json({ message: "Failed to fetch mentors" });
   }
 };
 
-// ------------------ GET ALL MENTORS ------------------
-export const getMentors = async (req, res) => {
+// ----------------------------------------------------------------------
+// UPDATE MENTOR PROFILE
+// ----------------------------------------------------------------------
+export const updateMentor = async (req, res) => {
   try {
-    const { search, domain, sort, page = 1, limit = 10 } = req.query;
+    const { skills, experience } = req.body;
 
-    const filter = {
-      skills: { contains: domain || "", mode: "insensitive" },
-      user: {
-        name: { contains: search || "", mode: "insensitive" }
-      }
-    };
-
-    const mentors = await prisma.mentor.findMany({
-      where: filter,
-      orderBy: { rating: sort === "desc" ? "desc" : "asc" },
-      include: { user: true },
-      skip: (page - 1) * limit,
-      take: Number(limit)
+    const updated = await prisma.mentor.update({
+      where: { userId: req.user.id },
+      data: { skills, experience },
     });
 
-    res.json(mentors);
+    res.json({ message: "Mentor updated", updated });
   } catch (err) {
-    res.status(500).json({ message: "Could not fetch mentors" });
+    console.error("Update Mentor Error:", err);
+    res.status(500).json({ message: "Failed to update mentor" });
+  }
+};
+
+// ----------------------------------------------------------------------
+// DELETE MENTOR
+// ----------------------------------------------------------------------
+export const deleteMentor = async (req, res) => {
+  try {
+    await prisma.mentor.delete({
+      where: { userId: req.user.id },
+    });
+
+    res.json({ message: "Mentor deleted" });
+  } catch (err) {
+    console.error("Delete Mentor Error:", err);
+    res.status(500).json({ message: "Failed to delete mentor" });
   }
 };

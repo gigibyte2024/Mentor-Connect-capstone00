@@ -1,75 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
+import { loginUser, signupUser } from "./api/auth";
+import API from "./api/axiosInstance"; // to call /users/me
 
 const Auth = () => {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
 
-  const handleLogin = (e) => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "student",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // ============================
+  //        HANDLE LOGIN / SIGNUP
+  // ============================
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const role = localStorage.getItem("selectedRole");
+    try {
+      let response;
 
-    if (role === "student") {
-      navigate("/student-dashboard");
-    } else {
-      navigate("/mentor-dashboard");
+      if (isLogin) {
+        // ---------------- LOGIN ----------------
+        response = await loginUser({
+          email: form.email,
+          password: form.password,
+        });
+
+        // loginUser returns { token }
+        localStorage.setItem("token", response.data.token);
+
+        // ================================
+        //  FETCH USER ROLE AFTER LOGIN
+        // ================================
+        const me = await API.get("/users/me");
+
+        const userRole = me.data.role;
+
+        if (userRole === "student") {
+          navigate("/student-dashboard");
+        } else {
+          navigate("/mentor-dashboard");
+        }
+      }
+
+      // ---------------- SIGNUP ----------------
+      else {
+        response = await signupUser({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          role: form.role,
+        });
+
+        alert("Signup successful! Please login now.");
+        setIsLogin(true);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
     <div className="auth-wrapper">
-
       <div className="auth-card">
 
-        {/* LEFT IMAGE */}
-        <div className="auth-left">
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAS5v4eZ7fQNCPFm7Wdx6STLtT51YEKBRL2srDW0ZQb3OM9s4ebVric7l7OUhERRaoGO9Dr5bbgCtNmSIgq2F8RjSTshe0yLCb-8OtA1FW5molq1FrfqctkeoXCZoiLlBd0LZG9xOromif4HsmLU4RNxs12gpLIKRhGh_-IbASjrdhdPAlaBhoc5nllWz5k6PvNexlDmqMO_U_3YtwLPtvdeujxgROZmPXyz-nKxHYZkLThzGq9j2i97qZxG0It2KZUi1RM6RNCfnk"
-            alt="Cyberpunk Illustration"
-            className="auth-image"
-          />
-        </div>
-
-        {/* RIGHT AREA */}
         <div className="auth-right">
-
           <h1 className="auth-title">COMMIT CONNECT</h1>
 
-          <div className="auth-title-bars">
-            <div className="bar bar-cyan"></div>
-            <div className="bar bar-magenta"></div>
-            <div className="bar bar-light"></div>
-          </div>
-
-          <h2 className="welcome">Welcome Back</h2>
-          <p className="subtitle">Sign in to continue your journey on the grid</p>
-
           <div className="toggle-box">
-            <button className="toggle-btn active">Login</button>
-            <button className="toggle-btn">Signup</button>
+            <button
+              className={`toggle-btn ${isLogin ? "active" : ""}`}
+              onClick={() => setIsLogin(true)}
+            >
+              Login
+            </button>
+
+            <button
+              className={`toggle-btn ${!isLogin ? "active" : ""}`}
+              onClick={() => setIsLogin(false)}
+            >
+              Signup
+            </button>
           </div>
 
-          <form className="auth-form" onSubmit={handleLogin}>
-            <label>Email Address</label>
-            <input type="email" placeholder="Enter your email" required />
+          <form className="auth-form" onSubmit={handleSubmit}>
+            {!isLogin && (
+              <>
+                <label>Name</label>
+                <input name="name" onChange={handleChange} required />
+
+                <label>Role</label>
+                <select name="role" onChange={handleChange}>
+                  <option value="student">Student</option>
+                  <option value="mentor">Mentor</option>
+                </select>
+              </>
+            )}
+
+            <label>Email</label>
+            <input
+              name="email"
+              type="email"
+              onChange={handleChange}
+              required
+            />
 
             <label>Password</label>
-            <div className="password-field">
-              <input type="password" placeholder="Enter your password" required />
-              <button type="button" className="eye-btn">👁</button>
-            </div>
+            <input
+              name="password"
+              type="password"
+              onChange={handleChange}
+              required
+            />
 
-            <a className="forgot" href="#">Forgot password?</a>
-
-            <button type="submit" className="login-btn">Login</button>
+            <button type="submit" className="login-btn">
+              {isLogin ? "Login" : "Signup"}
+            </button>
           </form>
 
-          <p className="signup-text">
-            Don’t have an account? <a href="#">Sign up</a>
-          </p>
         </div>
-
       </div>
     </div>
   );

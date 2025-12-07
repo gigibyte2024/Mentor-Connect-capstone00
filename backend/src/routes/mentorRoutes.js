@@ -1,14 +1,16 @@
-// src/routes/mentorRoutes.js
 import express from "express";
-const router = express.Router();
+import {
+  getMentors,
+  updateMentor,
+  deleteMentor
+} from "../controllers/mentorController.js";
 
-import { createMentor, getMentors } from "../controllers/mentorController.js";
 import { protectRoute } from "../middleware/protectRoute.js";
 
-// CREATE mentor profile
-router.post("/", protectRoute, createMentor);
+const router = express.Router();
 
-// GET mentors (search, sort, filter)
-router.get("/", getMentors);
+router.get("/", protectRoute, getMentors);
+router.put("/", protectRoute, updateMentor);
+router.delete("/", protectRoute, deleteMentor);
 
 export default router;

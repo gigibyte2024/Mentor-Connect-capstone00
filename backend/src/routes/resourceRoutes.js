@@ -1,13 +1,25 @@
 import express from "express";
-const router = express.Router();
+import {
+  addResource,
+  getResources,
+  updateResource,
+  deleteResource
+} from "../controllers/resourceController.js";
 
-import { addResource, getResources } from "../controllers/resourceController.js";
 import { protectRoute } from "../middleware/protectRoute.js";
 
-// Mentor adds a resource
+const router = express.Router();
+
+// Create
 router.post("/", protectRoute, addResource);
 
-// Mentor views own resources
+// Read (with search + pagination)
 router.get("/", protectRoute, getResources);
+
+// Update
+router.put("/:id", protectRoute, updateResource);
+
+// Delete
+router.delete("/:id", protectRoute, deleteResource);
 
 export default router;

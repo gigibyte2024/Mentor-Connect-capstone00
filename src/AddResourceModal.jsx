@@ -11,11 +11,11 @@ const AddResourceModal = ({ onClose, onSave }) => {
 
     onSave({
       title,
-      description,
-      category
+      desc: description,
+      category,
+      fileUrl: "none" // Optional since you are not uploading files
     });
 
-    // Clear fields after save
     setTitle("");
     setDescription("");
     setCategory("");
@@ -50,8 +50,12 @@ const AddResourceModal = ({ onClose, onSave }) => {
         />
 
         <div className="modal-actions">
-          <button className="cancel-btn" onClick={onClose}>Cancel</button>
-          <button className="save-btn" onClick={handleSubmit}>Save</button>
+          <button className="cancel-btn" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="save-btn" onClick={handleSubmit}>
+            Save
+          </button>
         </div>
       </div>
     </div>
@@ -59,4 +63,3 @@ const AddResourceModal = ({ onClose, onSave }) => {
 };
 
 export default AddResourceModal;
-

@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./student-dashboard.css";
 import { useNavigate } from "react-router-dom";
+import API from "../api/axiosInstance"; 
+import { getMyProfile } from "../api/user"; 
+import { getMentors } from "../api/mentor";  
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
+
+  // ---------- STATE ----------
+  const [user, setUser] = useState(null);
+  const [mentors, setMentors] = useState([]);
+
+  // ---------- FETCH PROFILE ----------
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await getMyProfile();
+        setUser(res.data.user);
+      } catch (err) {
+        console.log("Profile fetch error:", err);
+      }
+    }
+    fetchProfile();
+  }, []);
+
+  // ---------- FETCH MENTORS ----------
+  useEffect(() => {
+    async function fetchMentors() {
+      try {
+        const res = await getMentors();
+        setMentors(res.data.mentors);
+      } catch (err) {
+        console.log("Mentor fetch error:", err);
+      }
+    }
+    fetchMentors();
+  }, []);
 
   return (
     <div className="student-wrapper">
@@ -19,35 +52,24 @@ const StudentDashboard = () => {
         <div className="sidebar-menu">
           <p className="menu-item active">📊 Dashboard</p>
 
-          <p
-            className="menu-item"
-            onClick={() => navigate("/student-mentors")}
-          >
+          <p className="menu-item" onClick={() => navigate("/student-mentors")}>
             👤 Discover Mentors
           </p>
 
-          <p
-            className="menu-item"
-            onClick={() => navigate("/quizzes")}
-          >
+          <p className="menu-item" onClick={() => navigate("/quizzes")}>
             🧠 Quizzes
           </p>
 
-          <p
-            className="menu-item"
-            onClick={() => navigate("/chat")}
-          >
+          <p className="menu-item" onClick={() => navigate("/chat")}>
             💬 Chat
           </p>
 
-          <p
-            className="menu-item"
-            onClick={() => navigate("/profile")}
-          >
+          <p className="menu-item" onClick={() => navigate("/profile")}>
             ⚙ Profile
           </p>
         </div>
 
+        {/* BOTTOM STUDENT INFO */}
         <div className="sidebar-bottom">
           <div className="student-info">
             <div
@@ -59,8 +81,8 @@ const StudentDashboard = () => {
             ></div>
 
             <div>
-              <p className="student-name">Jane "Glitch" Doe</p>
-              <p className="student-role">Cyber Knight</p>
+              <p className="student-name">{user?.name || "Loading..."}</p>
+              <p className="student-role">{user?.role || "Student"}</p>
             </div>
           </div>
         </div>
@@ -72,17 +94,19 @@ const StudentDashboard = () => {
 
         {/* TOP BAR */}
         <header className="topbar">
-          <h1 className="top-title">Welcome Back, Jane!</h1>
+          <h1 className="top-title">
+            Welcome Back, {user?.name?.split(" ")[0] || "Student"}!
+          </h1>
 
           <div className="top-stats">
             <div className="stats-box">
               <p>Points:</p>
-              <strong className="cyan-text">12,500</strong>
+              <strong className="cyan-text">{user?.points || 0}</strong>
             </div>
 
             <div className="stats-box">
               <p>Level:</p>
-              <strong className="cyan-text">12</strong>
+              <strong className="cyan-text">{user?.level || 1}</strong>
             </div>
 
             <button className="notif-btn">🔔</button>
@@ -114,98 +138,60 @@ const StudentDashboard = () => {
             <div className="section-title">Discover Mentors</div>
 
             <div className="mentor-grid">
-
-              {/* Mentor 1 */}
-              <div className="mentor-card">
-                <div
-                  className="mentor-img"
-                  style={{
-                    backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7QCtQ6cNN1H0t8kYkGxZ1PH9DnOarmX1PhD10cJkaSyfXepaO9yKXEGwqLJf8W6MF0tlXaWkSrR5YMQfDah7lOyljDyP3PNc792OQU_9HygjTRiSwMQPKQ-9Ja9726KPs3wXe-zmt9eBdLYy5o8HHduFKosEAxfS1jbJrtKb4GDJf8HWl6aV88Dv-whrA1IRK0AAcomjRrA8A7jjS-sRrv4fhQVO0YFxwXQXDoTB-qtGacDBXUxqdPJ57mmsPwxqLkWyo--SOWnQ')"
-                  }}
-                />
-                <p className="mentor-name">Alex "Cipher" Chen</p>
-                <p className="mentor-skill">AI Engineering</p>
-                <button className="connect-btn">Connect</button>
-              </div>
-
-              {/* Mentor 2 */}
-              <div className="mentor-card">
-                <div
-                  className="mentor-img"
-                  style={{
-                    backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAd9C8GPkT8FFbQpcqXbV2f7_g_tHeiTGvPP-MC91dkMcjXLOoRskR1rUQp8P9S1VTDn0u99B7DymEGzHcj7Jp1nszHMcHa_-xPP-Gh1s-nu5OqCCeWlN46sJhxaNm244RSs86SfTMbwtN0H5XpOn2Dc3T7YVfDD3-pcuP1yUqRWFhsno38zvYqvnWsCXI_FuZdLt0jKOGzkmkKjGd6sNFppEn9EopwYPKUoVv4bEfkHhgIft6tj5sqnqYcVy3qZn3cNQO7WjmHJZM')"
-                  }}
-                />
-                <p className="mentor-name">Maya "Oracle" Ito</p>
-                <p className="mentor-skill">Quantum Computing</p>
-                <button className="connect-btn">Connect</button>
-              </div>
-
-              {/* Mentor 3 */}
-              <div className="mentor-card">
-                <div
-                  className="mentor-img"
-                  style={{
-                    backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4ZfEL0PbMMN04MYwVw1xK8EAMN5Ul0vefLhray1Cs11XfaisucRougTHvvDi5FLfO37qI4Jhkw8FpIQ6pEktP9laqfKnjy87p7umqeI360eth68bsaKSaUyjrugADKLPGvDzfiimxvJvzC7SDHCQshH-QmnMJu0rcii_diKZ4yNPQUn8ehDuVU7NbM2Gr6gzl4vCFWqJCEZuR-Gwa2DDVyJuP3hpsRozulR_lb9R-YtphFKFoRiQaxow7xVC_WTWa962S7RNxQDk')"
-                  }}
-                />
-                <p className="mentor-name">Ben "Node" Carter</p>
-                <p className="mentor-skill">Web3 Development</p>
-                <button className="connect-btn">Connect</button>
-              </div>
-
+              {mentors.length > 0 ? (
+                mentors.slice(0, 3).map((mentor) => (
+                  <div className="mentor-card" key={mentor.id}>
+                    <div
+                      className="mentor-img"
+                      style={{
+                        backgroundImage:
+                          "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkcUOj8oN48c9U0v8tYbslhvcP5wVYk_98Aw&usqp=CAU')",
+                      }}
+                    />
+                    <p className="mentor-name">{mentor.user?.name}</p>
+                    <p className="mentor-skill">{mentor.skills}</p>
+                    <button className="connect-btn">Connect</button>
+                  </div>
+                ))
+              ) : (
+                <p>No mentors found.</p>
+              )}
             </div>
 
             {/* Active Quizzes */}
             <div className="section-title">Active Quizzes</div>
 
             <div className="quiz-grid">
-
-              {/* Quiz 1 */}
+              {/* KEEPING YOUR ORIGINAL UI — unchanged */}
               <div className="quiz-card">
                 <p className="quiz-status pink">In Progress</p>
                 <h4>Cryptography Basics</h4>
                 <p className="small-muted">Security Module</p>
 
                 <div className="progress-bar small">
-                  <div
-                    className="progress-fill pink"
-                    style={{ width: "75%" }}
-                  />
+                  <div className="progress-fill pink" style={{ width: "75%" }} />
                 </div>
               </div>
 
-              {/* Quiz 2 */}
               <div className="quiz-card">
                 <p className="quiz-status">Not Started</p>
                 <h4>Data Structures Challenge</h4>
                 <p className="small-muted">Core Curriculum</p>
 
                 <div className="progress-bar small">
-                  <div
-                    className="progress-fill grey"
-                    style={{ width: "0%" }}
-                  />
+                  <div className="progress-fill grey" style={{ width: "0%" }} />
                 </div>
               </div>
 
-              {/* Quiz 3 COMPLETED */}
               <div className="quiz-card disabled">
                 <p className="quiz-status cyan">Completed</p>
                 <h4>Intro to Python</h4>
                 <p className="small-muted">Beginner Track</p>
 
                 <div className="progress-bar small">
-                  <div
-                    className="progress-fill cyan"
-                    style={{ width: "100%" }}
-                  />
+                  <div className="progress-fill cyan" style={{ width: "100%" }} />
                 </div>
               </div>
-
             </div>
 
           </div>
@@ -217,44 +203,27 @@ const StudentDashboard = () => {
             <div className="progress-box">
               <h3>Course Progress</h3>
 
+              {/* Your UI unchanged */}
               <div className="arc-container">
                 <svg viewBox="0 0 100 50" className="arc-svg">
-
-                  {/* Main base arc */}
                   <path d="M 10 50 A 40 40 0 0 1 90 50" className="arc-track" />
-
-                  {/* CYAN arc 75% */}
                   <path
                     d="M 10 50 A 40 40 0 0 1 90 50"
                     className="arc-primary"
-                    style={{
-                      strokeDasharray: "125.6",
-                      strokeDashoffset: "31.4"
-                    }}
+                    style={{ strokeDasharray: "125.6", strokeDashoffset: "31.4" }}
                   />
-
-                  {/* MAGENTA arc */}
                   <path d="M 20 50 A 30 30 0 0 1 80 50" className="arc-track" />
                   <path
                     d="M 20 50 A 30 30 0 0 1 80 50"
                     className="arc-magenta"
-                    style={{
-                      strokeDasharray: "94.2",
-                      strokeDashoffset: "47.1"
-                    }}
+                    style={{ strokeDasharray: "94.2", strokeDashoffset: "47.1" }}
                   />
-
-                  {/* VIOLET arc */}
                   <path d="M 30 50 A 20 20 0 0 1 70 50" className="arc-track" />
                   <path
                     d="M 30 50 A 20 20 0 0 1 70 50"
                     className="arc-violet"
-                    style={{
-                      strokeDasharray: "62.8",
-                      strokeDashoffset: "50.24"
-                    }}
+                    style={{ strokeDasharray: "62.8", strokeDashoffset: "50.24" }}
                   />
-
                 </svg>
               </div>
 
