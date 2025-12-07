@@ -1,13 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+// =======================
 // ADD RESOURCE
+// =======================
 export const addResource = async (req, res) => {
   try {
     const { title, desc, fileUrl, category } = req.body;
 
     const mentor = await prisma.mentor.findFirst({
-      where: { userId: req.user.id }
+      where: { userId: req.user.id },
     });
 
     if (!mentor) return res.status(400).json({ message: "Mentor not found" });
@@ -18,8 +20,8 @@ export const addResource = async (req, res) => {
         desc,
         fileUrl,
         category,
-        mentorId: mentor.id
-      }
+        mentorId: mentor.id,
+      },
     });
 
     res.json({ message: "Resource added", resource });
@@ -29,22 +31,62 @@ export const addResource = async (req, res) => {
   }
 };
 
-// GET RESOURCES FOR LOGGED-IN MENTOR
+// =======================
+// GET RESOURCES
+// =======================
 export const getResources = async (req, res) => {
   try {
     const mentor = await prisma.mentor.findFirst({
-      where: { userId: req.user.id }
+      where: { userId: req.user.id },
     });
 
     if (!mentor) return res.status(400).json({ message: "Mentor not found" });
 
     const resources = await prisma.resource.findMany({
-      where: { mentorId: mentor.id }
+      where: { mentorId: mentor.id },
     });
 
     res.json(resources);
   } catch (err) {
     console.error("Get Resources Error:", err);
     res.status(500).json({ error: "Failed to fetch resources" });
+  }
+};
+
+// =======================
+// UPDATE RESOURCE
+// =======================
+export const updateResource = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { title, desc, fileUrl, category } = req.body;
+
+    const updated = await prisma.resource.update({
+      where: { id },
+      data: { title, desc, fileUrl, category },
+    });
+
+    res.json({ message: "Resource updated successfully", updated });
+  } catch (err) {
+    console.error("Update Resource Error:", err);
+    res.status(500).json({ message: "Failed to update resource" });
+  }
+};
+
+// =======================
+// DELETE RESOURCE
+// =======================
+export const deleteResource = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    await prisma.resource.delete({
+      where: { id },
+    });
+
+    res.json({ message: "Resource deleted successfully" });
+  } catch (err) {
+    console.error("Delete Resource Error:", err);
+    res.status(500).json({ message: "Failed to delete resource" });
   }
 };
