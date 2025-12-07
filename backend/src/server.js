@@ -15,23 +15,27 @@ import chatRoutes from "./routes/chatRoutes.js";
 import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Test route
+// ------------------ TEST ROUTE ------------------
 app.get("/", (req, res) => {
   res.send("🚀 Backend running successfully!");
 });
 
-// Public routes (no login needed)
-app.use("/api/auth", authRoutes);
+// ------------------ PUBLIC ROUTES ------------------
+app.use("/api/auth", authRoutes);  
+// login/signup do NOT need auth
 
-// Protected routes (login required)
+// ------------------ PROTECTED ROUTES ------------------
 app.use("/api/users", protectRoute, userRoutes);
 app.use("/api/mentors", protectRoute, mentorRoutes);
 app.use("/api/resources", protectRoute, resourceRoutes);
 app.use("/api/quiz", protectRoute, quizRoutes);
 app.use("/api/chat", protectRoute, chatRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+// ------------------ START SERVER ------------------
+const PORT = process.env.PORT || 7000;
+app.listen(PORT, () => console.log(`http://localhost:${PORT} 🚀`));
