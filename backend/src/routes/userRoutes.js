@@ -1,17 +1,24 @@
 // src/routes/userRoutes.js
 import express from "express";
+import { 
+  getUsers, 
+  getMe, 
+  updateUser, 
+  deleteUser 
+} from "../controllers/userController.js";
+
 const router = express.Router();
 
-import { getUsers, updateUser, deleteUser } from "../controllers/userController.js";
-import { protectRoute } from "../middleware/protectRoute.js";
+// GET logged-in user
+router.get("/me", getMe);
 
-// READ users (search, sort, filter, pagination)
-router.get("/", protectRoute, getUsers);
+// Fetch all users (search, sort, filter, pagination)
+router.get("/", getUsers);
 
-// UPDATE profile
-router.put("/", protectRoute, updateUser);
+// Update logged-in user profile
+router.put("/", updateUser);
 
-// DELETE user
-router.delete("/", protectRoute, deleteUser);
+// Delete logged-in user
+router.delete("/", deleteUser);
 
 export default router;

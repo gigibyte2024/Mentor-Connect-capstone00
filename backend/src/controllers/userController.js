@@ -1,43 +1,87 @@
-// src/controllers/userController.js
-import { prisma } from "../utils/prisma.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-// ------------------ GET ALL USERS ------------------
-export const getUsers = async (req, res) => {
+// ------------------ GET LOGGED-IN USER ------------------
+export const getMe = async (req, res) => {
   try {
-    const { search, sort, page = 1, limit = 10 } = req.query;
-
-    const skip = (page - 1) * limit;
-
-    const users = await prisma.user.findMany({
-      where: {
-        name: { contains: search || "", mode: "insensitive" }
-      },
-      orderBy: {
-        name: sort === "desc" ? "desc" : "asc"
-      },
-      skip: Number(skip),
-      take: Number(limit)
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
     });
 
-    res.json(users);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to fetch users" });
+    console.error("GET /me Error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-// ------------------ UPDATE PROFILE ------------------
-export const updateUser = async (req, res) => {
+// ------------------ GET ALL USERS (SEARCH, SORT, FILTER, PAGINATION) ------------------
+export const getUsers = async (req, res) => {
   try {
-    const { name, role } = req.body;
+    const {
+      search = "",
+      role,
+      sort = "name",
+      order = "asc",
+      page = 1,
+      limit = 10
+    } = req.query;
 
-    const updated = await prisma.user.update({
-      where: { id: Number(req.user.id) },
-      data: { name, role }
+    const skip = (page - 1) * limit;
+
+    const filters = {
+      AND: [
+        search
+          ? {
+              OR: [
+                { name: { contains: search, mode: "insensitive" } },
+                { email: { contains: search, mode: "insensitive" } },
+              ],
+            }
+          : {},
+        role ? { role } : {},
+      ],
+    };
+
+    const users = await prisma.user.findMany({
+      where: filters,
+      skip: Number(skip),
+      take: Number(limit),
+      orderBy: { [sort]: order },
     });
 
-    res.json(updated);
+    const total = await prisma.user.count({ where: filters });
+
+    res.json({
+      users,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / limit),
+      },
+    });
   } catch (error) {
+    console.error("GET /users Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// ------------------ UPDATE USER ------------------
+export const updateUser = async (req, res) => {
+  try {
+    const { name, skills, experience } = req.body;
+
+    const updated = await prisma.user.update({
+      where: { id: req.user.id },
+      data: { name, skills, experience },
+    });
+
+    res.json({ message: "Profile updated", updated });
+  } catch (error) {
+    console.error("UPDATE user Error:", error);
     res.status(500).json({ message: "Update failed" });
   }
 };
@@ -46,11 +90,12 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     await prisma.user.delete({
-      where: { id: Number(req.user.id) }
+      where: { id: req.user.id },
     });
 
-    res.json({ message: "User deleted" });
+    res.json({ message: "Account deleted successfully" });
   } catch (error) {
+    console.error("DELETE user Error:", error);
     res.status(500).json({ message: "Delete failed" });
   }
 };
