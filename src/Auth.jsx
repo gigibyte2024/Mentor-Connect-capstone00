@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import { loginUser, signupUser } from "./api/auth";
-import API from "./api/axiosInstance"; // to call /users/me
+import API from "./api/axiosInstance";
 
 const Auth = () => {
   const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
 
   const [form, setForm] = useState({
@@ -20,7 +21,7 @@ const Auth = () => {
   };
 
   // ============================
-  //        HANDLE LOGIN / SIGNUP
+  //   HANDLE LOGIN / SIGNUP
   // ============================
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,8 +29,8 @@ const Auth = () => {
     try {
       let response;
 
+      // ---------------- LOGIN ----------------
       if (isLogin) {
-        // ---------------- LOGIN ----------------
         response = await loginUser({
           email: form.email,
           password: form.password,
@@ -38,11 +39,8 @@ const Auth = () => {
         // loginUser returns { token }
         localStorage.setItem("token", response.data.token);
 
-        // ================================
-        //  FETCH USER ROLE AFTER LOGIN
-        // ================================
+        // FETCH USER ROLE
         const me = await API.get("/users/me");
-
         const userRole = me.data.role;
 
         if (userRole === "student") {
@@ -77,8 +75,10 @@ const Auth = () => {
         <div className="auth-right">
           <h1 className="auth-title">COMMIT CONNECT</h1>
 
+          {/* ========== LOGIN / SIGNUP TABS ========== */}
           <div className="toggle-box">
             <button
+              type="button"
               className={`toggle-btn ${isLogin ? "active" : ""}`}
               onClick={() => setIsLogin(true)}
             >
@@ -86,6 +86,7 @@ const Auth = () => {
             </button>
 
             <button
+              type="button"
               className={`toggle-btn ${!isLogin ? "active" : ""}`}
               onClick={() => setIsLogin(false)}
             >
@@ -93,11 +94,18 @@ const Auth = () => {
             </button>
           </div>
 
+          {/* ========== FORM ========== */}
           <form className="auth-form" onSubmit={handleSubmit}>
+
+            {/* SIGNUP ONLY FIELDS */}
             {!isLogin && (
               <>
                 <label>Name</label>
-                <input name="name" onChange={handleChange} required />
+                <input
+                  name="name"
+                  onChange={handleChange}
+                  required={!isLogin}
+                />
 
                 <label>Role</label>
                 <select name="role" onChange={handleChange}>
@@ -107,6 +115,7 @@ const Auth = () => {
               </>
             )}
 
+            {/* EMAIL */}
             <label>Email</label>
             <input
               name="email"
@@ -115,6 +124,7 @@ const Auth = () => {
               required
             />
 
+            {/* PASSWORD */}
             <label>Password</label>
             <input
               name="password"
@@ -123,6 +133,7 @@ const Auth = () => {
               required
             />
 
+            {/* SUBMIT BUTTON */}
             <button type="submit" className="login-btn">
               {isLogin ? "Login" : "Signup"}
             </button>
