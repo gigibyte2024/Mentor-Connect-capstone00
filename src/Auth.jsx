@@ -6,7 +6,6 @@ import API from "./api/axiosInstance";
 
 const Auth = () => {
   const navigate = useNavigate();
-
   const [isLogin, setIsLogin] = useState(true);
 
   const [form, setForm] = useState({
@@ -20,39 +19,35 @@ const Auth = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // ============================
-  //   HANDLE LOGIN / SIGNUP
-  // ============================
+  // LOGIN + SIGNUP HANDLER
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       let response;
 
-      // ---------------- LOGIN ----------------
+      // ---------------------- LOGIN ----------------------
       if (isLogin) {
         response = await loginUser({
           email: form.email,
           password: form.password,
         });
 
-        // loginUser returns { token }
+        // Save token
         localStorage.setItem("token", response.data.token);
 
-        // FETCH USER ROLE
+        // Get logged-in user
         const me = await API.get("/users/me");
+
         const userRole = me.data.role;
 
-        if (userRole === "student") {
-          navigate("/student-dashboard");
-        } else {
-          navigate("/mentor-dashboard");
-        }
+        if (userRole === "student") navigate("/student-dashboard");
+        else navigate("/mentor-dashboard");
       }
 
-      // ---------------- SIGNUP ----------------
+      // ---------------------- SIGNUP ----------------------
       else {
-        response = await signupUser({
+        await signupUser({
           name: form.name,
           email: form.email,
           password: form.password,
@@ -71,41 +66,36 @@ const Auth = () => {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-
         <div className="auth-right">
           <h1 className="auth-title">COMMIT CONNECT</h1>
 
-          {/* ========== LOGIN / SIGNUP TABS ========== */}
+          {/* TOGGLE LOGIN / SIGNUP */}
           <div className="toggle-box">
             <button
-              type="button"
               className={`toggle-btn ${isLogin ? "active" : ""}`}
               onClick={() => setIsLogin(true)}
+              type="button"
             >
               Login
             </button>
 
             <button
-              type="button"
               className={`toggle-btn ${!isLogin ? "active" : ""}`}
               onClick={() => setIsLogin(false)}
+              type="button"
             >
               Signup
             </button>
           </div>
 
-          {/* ========== FORM ========== */}
+          {/* FORM */}
           <form className="auth-form" onSubmit={handleSubmit}>
 
-            {/* SIGNUP ONLY FIELDS */}
+            {/* SHOW ONLY IN SIGNUP MODE */}
             {!isLogin && (
               <>
                 <label>Name</label>
-                <input
-                  name="name"
-                  onChange={handleChange}
-                  required={!isLogin}
-                />
+                <input name="name" onChange={handleChange} required />
 
                 <label>Role</label>
                 <select name="role" onChange={handleChange}>
@@ -115,7 +105,6 @@ const Auth = () => {
               </>
             )}
 
-            {/* EMAIL */}
             <label>Email</label>
             <input
               name="email"
@@ -124,7 +113,6 @@ const Auth = () => {
               required
             />
 
-            {/* PASSWORD */}
             <label>Password</label>
             <input
               name="password"
@@ -133,12 +121,10 @@ const Auth = () => {
               required
             />
 
-            {/* SUBMIT BUTTON */}
             <button type="submit" className="login-btn">
               {isLogin ? "Login" : "Signup"}
             </button>
           </form>
-
         </div>
       </div>
     </div>
