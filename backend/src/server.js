@@ -16,21 +16,22 @@ import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
 
-// ----------- CORS FIX ------------
+// ----------- CORS CONFIG ------------
 app.use(
   cors({
     origin: [
       "https://mentor-connect-capstone00.vercel.app",
-      "http://localhost:5173"
+      "http://localhost:5173",
     ],
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type, Authorization",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-// FIX: Express 5 wildcard route (DO NOT USE "*")
-app.options("/*", cors());
+// ❌ REMOVE WILDCARD ⇒ THIS FIXES RENDER CRASH
+// app.options("*", cors());
+// app.options("/*", cors());
 
 // Middleware
 app.use(express.json());
