@@ -1,12 +1,15 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+
 const prisma = new PrismaClient();
 
-// ---------------------------------- GET LOGGED-IN USER ----------------------------------
+// --------------------- GET LOGGED-IN USER ---------------------
 export const getMe = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      include: { mentor: true }
+      // remove mentor unless actually needed
+      // include: { mentor: true }
     });
 
     res.json(user);
@@ -16,7 +19,7 @@ export const getMe = async (req, res) => {
   }
 };
 
-// ---------------------------------- GET ALL USERS ----------------------------------
+// --------------------- GET ALL USERS ---------------------
 export const getUsers = async (req, res) => {
   try {
     const { search = "", role, page = 1, limit = 10 } = req.query;
@@ -39,17 +42,21 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// ---------------------------------- UPDATE USER (🔑 REQUIRED CRUD) ----------------------------------
+// --------------------- UPDATE USER (SECURE PASSWORD HASH) ---------------------
 export const updateUser = async (req, res) => {
   try {
     const { name, password } = req.body;
 
+    let updatedData = { name };
+
+    if (password) {
+      const hashed = await bcrypt.hash(password, 10);
+      updatedData.password = hashed;
+    }
+
     const updated = await prisma.user.update({
       where: { id: req.user.id },
-      data: { 
-        name,
-        ...(password && { password })
-      }
+      data: updatedData
     });
 
     res.json({ message: "Profile updated", updated });
@@ -59,7 +66,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
-// ---------------------------------- DELETE USER (🔑 REQUIRED CRUD) ----------------------------------
+// --------------------- DELETE USER ---------------------
 export const deleteUser = async (req, res) => {
   try {
     await prisma.user.delete({
