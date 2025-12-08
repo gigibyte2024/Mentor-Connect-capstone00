@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Auth.css";
 import { useNavigate } from "react-router-dom";
 import { loginUser, signupUser } from "./api/auth";
-import API from "./api/axiosInstance";
+import API from "./api/axiosInstance"; // to call /users/me
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -19,34 +19,35 @@ const Auth = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // LOGIN + SIGNUP HANDLER
+  // ============================
+  // HANDLE LOGIN / SIGNUP
+  // ============================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       let response;
 
-      // ---------------------- LOGIN ----------------------
       if (isLogin) {
+        // -------- LOGIN --------
         response = await loginUser({
           email: form.email,
           password: form.password,
         });
 
-        // Save token
-        localStorage.setItem("token", response.data.token);
+        // loginUser returns ONLY token
+        localStorage.setItem("token", response.token);
 
-        // Get logged-in user
+        // get user info
         const me = await API.get("/users/me");
 
-        const userRole = me.data.role;
-
-        if (userRole === "student") navigate("/student-dashboard");
-        else navigate("/mentor-dashboard");
-      }
-
-      // ---------------------- SIGNUP ----------------------
-      else {
+        if (me.data.role === "student") {
+          navigate("/student-dashboard");
+        } else {
+          navigate("/mentor-dashboard");
+        }
+      } else {
+        // -------- SIGNUP --------
         await signupUser({
           name: form.name,
           email: form.email,
@@ -55,7 +56,7 @@ const Auth = () => {
         });
 
         alert("Signup successful! Please login now.");
-        setIsLogin(true);
+        setIsLogin(true); // switch to login mode
       }
     } catch (err) {
       console.error(err);
@@ -66,39 +67,48 @@ const Auth = () => {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
+
+        {/* RIGHT SIDE (Your original UI) */}
         <div className="auth-right">
           <h1 className="auth-title">COMMIT CONNECT</h1>
 
-          {/* TOGGLE LOGIN / SIGNUP */}
+          {/* Login - Signup Toggle */}
           <div className="toggle-box">
             <button
               className={`toggle-btn ${isLogin ? "active" : ""}`}
-              onClick={() => setIsLogin(true)}
               type="button"
+              onClick={() => setIsLogin(true)}
             >
               Login
             </button>
 
             <button
               className={`toggle-btn ${!isLogin ? "active" : ""}`}
-              onClick={() => setIsLogin(false)}
               type="button"
+              onClick={() => setIsLogin(false)}
             >
               Signup
             </button>
           </div>
 
-          {/* FORM */}
           <form className="auth-form" onSubmit={handleSubmit}>
-
-            {/* SHOW ONLY IN SIGNUP MODE */}
+            
+            {/* SIGNUP extra fields */}
             {!isLogin && (
               <>
                 <label>Name</label>
-                <input name="name" onChange={handleChange} required />
+                <input
+                  name="name"
+                  onChange={handleChange}
+                  required
+                />
 
                 <label>Role</label>
-                <select name="role" onChange={handleChange}>
+                <select
+                  name="role"
+                  value={form.role}
+                  onChange={handleChange}
+                >
                   <option value="student">Student</option>
                   <option value="mentor">Mentor</option>
                 </select>
@@ -125,6 +135,7 @@ const Auth = () => {
               {isLogin ? "Login" : "Signup"}
             </button>
           </form>
+
         </div>
       </div>
     </div>
