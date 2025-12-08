@@ -25,27 +25,28 @@ const Auth = () => {
     e.preventDefault();
 
     try {
-      let res;
-
       if (isLogin) {
-        // LOGIN
-        res = await loginUser({
+        // 🔥 LOGIN
+        const res = await loginUser({
           email: form.email,
           password: form.password,
         });
 
-        // Store token
+        // Token from backend
         const token = res.data.token;
+        if (!token) throw new Error("Token missing from backend");
+
+        // Save token
         localStorage.setItem("token", token);
 
-        // Inject token into axios
+        // Attach token to axios
         API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        // Fetch user details
+        // 🔥 Fetch logged-in user details
         const me = await API.get("/users/me");
         const role = me.data.role;
 
-        // Redirect user
+        // Redirect based on role
         if (role === "student") navigate("/student-dashboard");
         else navigate("/mentor-dashboard");
 
@@ -56,7 +57,8 @@ const Auth = () => {
         setIsLogin(true);
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Something went wrong.");
+      console.error("AUTH ERROR:", err);
+      alert(err.response?.data?.message || err.message || "Something went wrong.");
     }
   };
 
@@ -91,7 +93,7 @@ const Auth = () => {
               : "Join the grid — signup below"}
           </p>
 
-          {/* TOGGLE SWITCH */}
+          {/* TOGGLE */}
           <div className="toggle-box">
             <button
               className={`toggle-btn ${isLogin ? "active" : ""}`}

@@ -7,23 +7,17 @@ const API = axios.create({
   },
 });
 
-// Add token to every request when available
-API.interceptors.request.use(
-  (req) => {
-    const token = localStorage.getItem("token");
+// 🔥 Attach token to every request
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token");
 
-    // Only add header if token exists
-    if (token && token !== "undefined" && token !== "" && token !== null) {
-      req.headers.Authorization = `Bearer ${token}`;
-    } else {
-      delete req.headers.Authorization;
-    }
+  if (token && token !== "undefined" && token !== "" && token !== null) {
+    req.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete req.headers.Authorization;
+  }
 
-    return req;
-  },
-  (err) => Promise.reject(err)
-);
+  return req;
+});
 
 export default API;
-
-

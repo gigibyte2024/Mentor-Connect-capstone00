@@ -1,15 +1,9 @@
-import API from "./axiosInstance";
+import axios from "axios";
 
-// ---------------------- SIGNUP ----------------------
-export const signupUser = (data) => API.post("/auth/signup", data);
+const BASE_URL = "https://mentor-connect-capstone00.onrender.com/api/auth";
 
-// ---------------------- LOGIN ----------------------
-export const loginUser = async (data) => {
-  const res = await API.post("/auth/login", data);
+export const loginUser = (data) =>
+  axios.post(`${BASE_URL}/login`, data);
 
-  // store token
-  localStorage.setItem("token", res.data.token);
-
-  // return full response data
-  return res.data;  // <-- IMPORTANT
-};
+export const signupUser = (data) =>
+  axios.post(`${BASE_URL}/signup`, data);
