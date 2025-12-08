@@ -16,51 +16,52 @@ import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
 
-// -------------------------------------------
-// ✅ FINAL CORS FIX (WORKS ON VERCEL + RENDER)
-// -------------------------------------------
-const allowedOrigins = [
-  "https://mentor-connect-capstone00.vercel.app",
-  "http://localhost:5173",
-];
-
+// ----------------------------------------------------
+// ✅ FIXED CORS FOR VERCEL + RENDER + LOCALHOST
+// ----------------------------------------------------
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow server-to-server calls (no origin)
+    origin: (origin, callback) => {
+      // Allow server-to-server & Postman (no origin)
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.includes(origin)) {
+      // Allow Vercel main domain
+      if (origin === "https://mentor-connect-capstone00.vercel.app")
         return callback(null, true);
-      }
+
+      // Allow ALL Vercel preview deployments
+      if (/vercel\.app$/.test(origin)) return callback(null, true);
+
+      // Allow localhost (development)
+      if (origin.startsWith("http://localhost")) return callback(null, true);
 
       console.log("❌ BLOCKED ORIGIN:", origin);
-      return callback(new Error("CORS not allowed"), false);
+      return callback(new Error("CORS blocked"), false);
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
-// ❌ DO NOT USE app.options("*") — it breaks Render
-// ❌ DO NOT USE app.options("/*") — causes PathError
+// ❌ VERY IMPORTANT: DO NOT use app.options("*") on Render
+// It breaks Express router and causes "Missing parameter name /*"
 
-// Middleware
+// Body parser
 app.use(express.json());
 
-// Test Route
+// Test route
 app.get("/", (req, res) => {
   res.send("🚀 Backend running successfully!");
 });
 
 // ----------------------
-//   PUBLIC ROUTES
+//  PUBLIC ROUTES
 // ----------------------
 app.use("/api/auth", authRoutes);
 
 // ----------------------
-//   PROTECTED ROUTES
+//  PROTECTED ROUTES
 // ----------------------
 app.use("/api/users", protectRoute, userRoutes);
 app.use("/api/mentors", protectRoute, mentorRoutes);
@@ -69,9 +70,7 @@ app.use("/api/quiz", protectRoute, quizRoutes);
 app.use("/api/chat", protectRoute, chatRoutes);
 
 // ----------------------
-//   START SERVER
+//  START SERVER
 // ----------------------
 const PORT = process.env.PORT || 7000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
