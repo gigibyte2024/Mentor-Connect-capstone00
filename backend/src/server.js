@@ -29,8 +29,8 @@ app.use(
   })
 );
 
-// Handle preflight
-app.options("*", cors());
+// FIX: Express 5 wildcard route (DO NOT USE "*")
+app.options("/*", cors());
 
 // Middleware
 app.use(express.json());
