@@ -16,22 +16,35 @@ import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
 
-// ----------- CORS CONFIG ------------
+// -------------------------------------------
+// ✅ FINAL CORS FIX (WORKS ON VERCEL + RENDER)
+// -------------------------------------------
+const allowedOrigins = [
+  "https://mentor-connect-capstone00.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: [
-      "https://mentor-connect-capstone00.vercel.app",
-      "http://localhost:5173",
-    ],
+    origin: function (origin, callback) {
+      // Allow server-to-server calls (no origin)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.log("❌ BLOCKED ORIGIN:", origin);
+      return callback(new Error("CORS not allowed"), false);
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-// ❌ REMOVE WILDCARD ⇒ THIS FIXES RENDER CRASH
-// app.options("*", cors());
-// app.options("/*", cors());
+// ❌ DO NOT USE app.options("*") — it breaks Render
+// ❌ DO NOT USE app.options("/*") — causes PathError
 
 // Middleware
 app.use(express.json());
@@ -41,18 +54,24 @@ app.get("/", (req, res) => {
   res.send("🚀 Backend running successfully!");
 });
 
-// PUBLIC ROUTES
+// ----------------------
+//   PUBLIC ROUTES
+// ----------------------
 app.use("/api/auth", authRoutes);
 
-// PROTECTED ROUTES
+// ----------------------
+//   PROTECTED ROUTES
+// ----------------------
 app.use("/api/users", protectRoute, userRoutes);
 app.use("/api/mentors", protectRoute, mentorRoutes);
 app.use("/api/resources", protectRoute, resourceRoutes);
 app.use("/api/quiz", protectRoute, quizRoutes);
 app.use("/api/chat", protectRoute, chatRoutes);
 
-// Start Server
+// ----------------------
+//   START SERVER
+// ----------------------
 const PORT = process.env.PORT || 7000;
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
