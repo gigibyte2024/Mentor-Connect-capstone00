@@ -213,3 +213,98 @@
   color: cyan;
   font-weight: bold;
 }
+
+ /* ============================= */
+/* RESPONSIVE DESIGN FIXES       */
+/* ============================= */
+
+/* -------- Tablets (max-width: 1000px) -------- */
+@media (max-width: 1000px) {
+  .auth-card {
+    grid-template-columns: 1fr;   /* Only one column */
+    height: auto;
+    max-height: none;
+  }
+
+  .auth-left {
+    display: none; /* Hide left image on smaller screens */
+  }
+
+  .auth-right {
+    padding: 40px 35px;
+  }
+}
+
+/* -------- Mobile Devices (max-width: 600px) -------- */
+@media (max-width: 600px) {
+  .auth-wrapper {
+    height: auto;
+    padding: 20px;
+  }
+
+  .auth-card {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+
+  .auth-right {
+    padding: 30px 22px;
+  }
+
+  .auth-title {
+    font-size: 26px;
+  }
+
+  .welcome {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .toggle-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .auth-form input,
+  .auth-form select {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .login-btn {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .password-field input {
+    font-size: 14px;
+  }
+
+  .eye-btn {
+    width: 45px;
+  }
+}
+
+/* -------- Very Small Phones (max-width: 380px) -------- */
+@media (max-width: 380px) {
+  .auth-right {
+    padding: 22px 18px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  .toggle-btn {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .login-btn {
+    font-size: 15px;
+  }
+}

@@ -16,26 +16,42 @@ import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
 
+// ----------- CORS FIX ------------
+app.use(
+  cors({
+    origin: [
+      "https://mentor-connect-capstone00.vercel.app",
+      "http://localhost:5173"
+    ],
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+    credentials: true,
+  })
+);
+
+// Handle preflight
+app.options("*", cors());
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 
-// ------------------ TEST ROUTE ------------------
+// Test Route
 app.get("/", (req, res) => {
   res.send("🚀 Backend running successfully!");
 });
 
-// ------------------ PUBLIC ROUTES ------------------
-app.use("/api/auth", authRoutes);  
-// login/signup do NOT need auth
+// PUBLIC ROUTES
+app.use("/api/auth", authRoutes);
 
-// ------------------ PROTECTED ROUTES ------------------
+// PROTECTED ROUTES
 app.use("/api/users", protectRoute, userRoutes);
 app.use("/api/mentors", protectRoute, mentorRoutes);
 app.use("/api/resources", protectRoute, resourceRoutes);
 app.use("/api/quiz", protectRoute, quizRoutes);
 app.use("/api/chat", protectRoute, chatRoutes);
 
-// ------------------ START SERVER ------------------
+// Start Server
 const PORT = process.env.PORT || 7000;
-app.listen(PORT, () => console.log(`http://localhost:${PORT} 🚀`));
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
