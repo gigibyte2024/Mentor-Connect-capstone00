@@ -23,10 +23,19 @@ const StudentMentorDiscover = () => {
         `/mentors?search=${search}&sort=${sort}&page=${page}`
       );
 
-      // Backend returns ARRAY, so:
-      setMentors(res.data);
+      console.log("MENTORS API RESPONSE:", res.data);
+
+      // SAFELY extract mentors no matter what backend sends
+      const mentorList =
+        res.data.mentors ||
+        res.data.data ||
+        (Array.isArray(res.data) ? res.data : []) ||
+        [];
+
+      setMentors(mentorList);
     } catch (err) {
-      console.error("Error fetching mentors:", err);
+      console.error("Mentor fetch error:", err);
+      setMentors([]); // Prevent UI crash
     } finally {
       setLoading(false);
     }
@@ -88,8 +97,16 @@ const StudentMentorDiscover = () => {
         {/* ----------- FILTER SIDEBAR ----------- */}
         <aside className="mentors-filters">
           <h3 className="filters-title">Filters</h3>
-
-          <button className="clear-filters-btn">🗑 Clear Filters</button>
+          <button
+            className="clear-filters-btn"
+            onClick={() => {
+              setSearch("");
+              setSort("rating");
+              setPage(1);
+            }}
+          >
+            🗑 Clear Filters
+          </button>
         </aside>
 
         {/* ----------- MAIN CONTENT ----------- */}
@@ -137,7 +154,7 @@ const StudentMentorDiscover = () => {
                 <p className="no-results">No mentors found.</p>
               )}
 
-              {mentors.map((m) => (
+              {(mentors || []).map((m) => (
                 <div key={m.id} className="mentor-card">
                   <button className="bookmark-btn">☆</button>
 
@@ -145,26 +162,28 @@ const StudentMentorDiscover = () => {
                     <div
                       className="mentor-avatar"
                       style={{
-                        backgroundImage:
-                          `url("https://via.placeholder.com/150")`,
+                        backgroundImage: `url("https://via.placeholder.com/150")`,
                       }}
                     />
 
                     <div className="mentor-info">
-                      <p className="mentor-name">{m.user?.name}</p>
-                      <p className="mentor-title">{m.experience}</p>
+                      <p className="mentor-name">{m?.user?.name || "Unnamed Mentor"}</p>
+                      <p className="mentor-title">{m?.experience || "Experience not mentioned"}</p>
                       <div className="mentor-rating">
-                        <span>★</span> {m.rating}
+                        <span>★</span> {m?.rating || "N/A"}
                       </div>
                     </div>
                   </div>
 
                   <div className="mentor-tags">
-                    {m.skills?.split(",").map((skill, index) => (
-                      <span key={index} className="tag tag-primary">
-                        {skill.trim()}
-                      </span>
-                    ))}
+                    {(m.skills || "")
+                      .split(",")
+                      .filter((skill) => skill.trim() !== "")
+                      .map((skill, index) => (
+                        <span key={index} className="tag tag-primary">
+                          {skill.trim()}
+                        </span>
+                      ))}
                   </div>
 
                   <button
@@ -177,7 +196,7 @@ const StudentMentorDiscover = () => {
               ))}
             </div>
 
-            {/* -------- PAGINATION (STATIC FOR NOW) -------- */}
+            {/* -------- PAGINATION -------- */}
             <div className="pagination">
               <button
                 className="page-arrow"
