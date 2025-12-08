@@ -34,7 +34,9 @@ function App() {
 
         {/* STUDENT FEATURES */}
         <Route path="/student-mentors" element={<StudentMentorDiscover />} />
-        <Route path="/mentor-profile" element={<MentorProfile />} />
+
+        {/* ⭐ DYNAMIC MENTOR PROFILE (IMPORTANT) */}
+        <Route path="/mentor-profile/:id" element={<MentorProfile />} />
 
         {/* QUIZZES */}
         <Route path="/quizzes" element={<Quizzes />} />
@@ -45,9 +47,6 @@ function App() {
 
         {/* PROFILE SETTINGS */}
         <Route path="/profile" element={<ProfileSettings />} />
-
-        {/* ❌ REMOVED MENTOR RESOURCES ROUTE */}
-        {/* It is now an internal component, not a separate page */}
 
       </Routes>
     </BrowserRouter>
