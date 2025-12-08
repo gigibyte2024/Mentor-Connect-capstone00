@@ -34,13 +34,21 @@ const Auth = () => {
           password: form.password,
         });
 
-        localStorage.setItem("token", res.data.token);
+        // Store token
+        const token = res.data.token;
+        localStorage.setItem("token", token);
 
+        // Inject token into axios
+        API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+        // Fetch user details
         const me = await API.get("/users/me");
         const role = me.data.role;
 
+        // Redirect user
         if (role === "student") navigate("/student-dashboard");
         else navigate("/mentor-dashboard");
+
       } else {
         // SIGNUP
         await signupUser(form);
@@ -145,9 +153,7 @@ const Auth = () => {
               </button>
             </div>
 
-            {isLogin && (
-              <p className="forgot">Forgot password?</p>
-            )}
+            {isLogin && <p className="forgot">Forgot password?</p>}
 
             <button className="login-btn" type="submit">
               {isLogin ? "Login" : "Signup"}
@@ -155,11 +161,13 @@ const Auth = () => {
 
             {isLogin ? (
               <p className="signup-text">
-                Don't have an account? <a onClick={() => setIsLogin(false)}>Sign up</a>
+                Don't have an account?{" "}
+                <a onClick={() => setIsLogin(false)}>Sign up</a>
               </p>
             ) : (
               <p className="signup-text">
-                Already have an account? <a onClick={() => setIsLogin(true)}>Login</a>
+                Already have an account?{" "}
+                <a onClick={() => setIsLogin(true)}>Login</a>
               </p>
             )}
           </form>
