@@ -3,17 +3,19 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-// ---------------------------------- GET LOGGED-IN USER ----------------------------------
+// ---------------------------------------------------
+// ⭐ GET LOGGED-IN USER
+// ---------------------------------------------------
 export const getMe = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
-      include: { mentor: true },
+      include: { mentor: true }, // include mentor if exists
     });
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // ❌ NEVER return password
+    // Remove password before sending
     const { password, ...safeUser } = user;
 
     res.json(safeUser);
@@ -23,7 +25,9 @@ export const getMe = async (req, res) => {
   }
 };
 
-// ---------------------------------- GET ALL USERS ----------------------------------
+// ---------------------------------------------------
+// ⭐ GET ALL USERS (with search, filter, pagination)
+// ---------------------------------------------------
 export const getUsers = async (req, res) => {
   try {
     const { search = "", role, page = 1, limit = 10 } = req.query;
@@ -32,17 +36,17 @@ export const getUsers = async (req, res) => {
       where: {
         AND: [
           { name: { contains: search, mode: "insensitive" } },
-          role ? { role } : {},
+          role ? { role } : {}, // optional role filter
         ],
       },
-      skip: (page - 1) * limit,
-      take: parseInt(limit),
+      skip: (page - 1) * Number(limit),
+      take: Number(limit),
       select: {
         id: true,
         name: true,
         email: true,
         role: true,
-        mentor: true,
+        mentor: true, // include mentor details for Discover Mentors page
       },
     });
 
@@ -53,7 +57,9 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// ---------------------------------- UPDATE USER ----------------------------------
+// ---------------------------------------------------
+// ⭐ UPDATE LOGGED-IN USER
+// ---------------------------------------------------
 export const updateUser = async (req, res) => {
   try {
     const { name, password } = req.body;
@@ -62,8 +68,8 @@ export const updateUser = async (req, res) => {
 
     if (name) updateData.name = name;
 
-    // If password exists → hash it before saving
-    if (password) {
+    // hash password ONLY if provided
+    if (password && password.trim() !== "") {
       updateData.password = await bcrypt.hash(password, 10);
     }
 
@@ -72,16 +78,21 @@ export const updateUser = async (req, res) => {
       data: updateData,
     });
 
-    const { password: _, ...safeUser } = updatedUser;
+    const { password: pw, ...safeUser } = updatedUser;
 
-    res.json({ message: "Profile updated", user: safeUser });
+    res.json({
+      message: "Profile updated",
+      user: safeUser,
+    });
   } catch (err) {
     console.error("Update User Error:", err);
     res.status(500).json({ message: "Failed to update user" });
   }
 };
 
-// ---------------------------------- DELETE USER ----------------------------------
+// ---------------------------------------------------
+// ⭐ DELETE LOGGED-IN USER
+// ---------------------------------------------------
 export const deleteUser = async (req, res) => {
   try {
     await prisma.user.delete({
