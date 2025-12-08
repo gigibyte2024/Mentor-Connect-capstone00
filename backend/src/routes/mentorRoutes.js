@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getMentors,
+  getMentorById,   // ⭐ NEW
   updateMentor,
   deleteMentor
 } from "../controllers/mentorController.js";
@@ -17,6 +18,15 @@ const router = express.Router();
  * -----------------------------------------
  */
 router.get("/", protectRoute, getMentors);
+
+/**
+ * -----------------------------------------
+ * GET SINGLE MENTOR BY ID
+ * @route GET /api/mentors/:id
+ * @access Private
+ * -----------------------------------------
+ */
+router.get("/:id", protectRoute, getMentorById);   // ⭐ REQUIRED FOR PROFILE PAGE
 
 /**
  * -----------------------------------------
@@ -37,4 +47,3 @@ router.put("/me", protectRoute, updateMentor);
 router.delete("/me", protectRoute, deleteMentor);
 
 export default router;
-
