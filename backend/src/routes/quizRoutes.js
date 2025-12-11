@@ -1,11 +1,21 @@
-// src/routes/quizRoutes.js
 import express from "express";
-const router = express.Router();
+import {
+  getAllQuizzes,
+  getQuizById,
+  submitQuiz
+} from "../controllers/quizController.js";
 
-import { submitQuiz } from "../controllers/quizController.js";
 import { protectRoute } from "../middleware/protectRoute.js";
 
-// Submit quiz
-router.post("/", protectRoute, submitQuiz);
+const router = express.Router();
+
+// Get list of quizzes
+router.get("/", protectRoute, getAllQuizzes);
+
+// Get quiz with questions
+router.get("/:id", protectRoute, getQuizById);
+
+// Submit quiz score
+router.post("/submit", protectRoute, submitQuiz);
 
 export default router;
