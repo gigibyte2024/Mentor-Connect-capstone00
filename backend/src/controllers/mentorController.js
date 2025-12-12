@@ -1,26 +1,25 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-// =====================================================================
-// ⭐ GET ALL MENTORS (Search + Sort + Pagination)
-// =====================================================================
+/**
+ * GET ALL MENTORS
+ * GET /api/mentors
+ * Public endpoint used by StudentMentorDiscover
+ */
 export const getMentors = async (req, res) => {
   try {
     let { search = "", sort = "rating", page = 1, limit = 6 } = req.query;
-
     page = parseInt(page);
     limit = parseInt(limit);
 
-    // Count mentors
     const totalMentors = await prisma.mentor.count({
       where: {
         skills: { contains: search, mode: "insensitive" },
       },
     });
 
-    const totalPages = Math.ceil(totalMentors / limit);
+    const totalPages = Math.max(1, Math.ceil(totalMentors / limit));
 
-    // Fetch mentors
     const mentors = await prisma.mentor.findMany({
       where: {
         skills: { contains: search, mode: "insensitive" },
@@ -28,7 +27,7 @@ export const getMentors = async (req, res) => {
       orderBy: { [sort]: "desc" },
       skip: (page - 1) * limit,
       take: limit,
-      include: { user: true }, // Fetch linked user info
+      include: { user: true },
     });
 
     return res.json({
@@ -42,69 +41,92 @@ export const getMentors = async (req, res) => {
   }
 };
 
-// =====================================================================
-// ⭐ GET MENTOR BY ID (for Mentor Profile Page)
-// =====================================================================
+/**
+ * GET SINGLE MENTOR BY ID
+ * GET /api/mentors/:id
+ * Public endpoint used by Mentor Profile page
+ */
 export const getMentorById = async (req, res) => {
   try {
-    const mentorId = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ message: "Invalid mentor id" });
+    }
 
     const mentor = await prisma.mentor.findUnique({
-      where: { id: mentorId },
+      where: { id },
       include: {
-        user: true, // fetch name, email
+        user: {
+          select: { id: true, name: true, email: true, role: true },
+        },
+        resources: true,
       },
     });
 
-    if (!mentor) {
-      return res.status(404).json({ message: "Mentor not found" });
-    }
+    if (!mentor) return res.status(404).json({ message: "Mentor not found" });
 
-    res.json({
-      id: mentor.id,
-      name: mentor.user.name,
-      email: mentor.user.email,
-      bio: mentor.bio || "No bio provided yet.",
-      experience: mentor.experience || "Not added",
-      skills: mentor.skills || [],
-      avatarUrl: mentor.avatarUrl || "",
-    });
-
+    return res.json(mentor);
   } catch (err) {
-    console.error("GetMentorById Error:", err);
+    console.error("Get MentorById Error:", err);
     res.status(500).json({ message: "Failed to fetch mentor" });
   }
 };
 
-// =====================================================================
-// ⭐ UPDATE MENTOR PROFILE
-// =====================================================================
+/**
+ * UPDATE MENTOR PROFILE
+ * PUT /api/mentors/me
+ * Protected
+ */
 export const updateMentor = async (req, res) => {
   try {
-    const { skills, experience, bio, avatarUrl } = req.body;
+    const { skills, experience } = req.body;
 
-    const updated = await prisma.mentor.update({
+    // Find mentor by userId (req.user.id from protectRoute)
+    const mentor = await prisma.mentor.findFirst({
       where: { userId: req.user.id },
-      data: { skills, experience, bio, avatarUrl },
     });
 
-    res.json({ message: "Mentor updated", updated });
+    if (!mentor) {
+      return res.status(404).json({ message: "Mentor not found for this user" });
+    }
+
+    const updated = await prisma.mentor.update({
+      where: { id: mentor.id },
+      data: {
+        ...(skills !== undefined ? { skills } : {}),
+        ...(experience !== undefined ? { experience } : {}),
+      },
+      include: { user: true },
+    });
+
+    return res.json({ message: "Mentor updated", mentor: updated });
   } catch (err) {
     console.error("Update Mentor Error:", err);
     res.status(500).json({ message: "Failed to update mentor" });
   }
 };
 
-// =====================================================================
-// ⭐ DELETE MENTOR
-// =====================================================================
+/**
+ * DELETE MENTOR
+ * DELETE /api/mentors/me
+ * Protected
+ */
 export const deleteMentor = async (req, res) => {
   try {
-    await prisma.mentor.delete({
+    // find mentor by userId
+    const mentor = await prisma.mentor.findFirst({
       where: { userId: req.user.id },
     });
 
-    res.json({ message: "Mentor deleted" });
+    if (!mentor) {
+      return res.status(404).json({ message: "Mentor not found for this user" });
+    }
+
+    await prisma.mentor.delete({
+      where: { id: mentor.id },
+    });
+
+    return res.json({ message: "Mentor deleted" });
   } catch (err) {
     console.error("Delete Mentor Error:", err);
     res.status(500).json({ message: "Failed to delete mentor" });

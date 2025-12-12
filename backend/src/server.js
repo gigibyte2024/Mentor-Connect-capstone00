@@ -17,22 +17,21 @@ import { protectRoute } from "./middleware/protectRoute.js";
 const app = express();
 
 // ----------------------------------------------------
-// ✅ FIXED CORS FOR VERCEL + RENDER + LOCALHOST
+// ✅ CORS FOR VERCEL + RENDER + LOCALHOST
 // ----------------------------------------------------
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow server-to-server & Postman (no origin)
-      if (!origin) return callback(null, true);
+      if (!origin) return callback(null, true); // server-to-server, postman
 
-      // Allow Vercel main domain
+      // Allow main Vercel domain
       if (origin === "https://mentor-connect-capstone00.vercel.app")
         return callback(null, true);
 
-      // Allow ALL Vercel preview deployments
+      // Allow all vercel preview links
       if (/vercel\.app$/.test(origin)) return callback(null, true);
 
-      // Allow localhost (development)
+      // Allow localhost
       if (origin.startsWith("http://localhost")) return callback(null, true);
 
       console.log("❌ BLOCKED ORIGIN:", origin);
@@ -44,13 +43,12 @@ app.use(
   })
 );
 
-// ❌ VERY IMPORTANT: DO NOT use app.options("*") on Render
-// It breaks Express router and causes "Missing parameter name /*"
-
 // Body parser
 app.use(express.json());
 
-// Test route
+// ----------------------
+//  TEST ROUTE
+// ----------------------
 app.get("/", (req, res) => {
   res.send("🚀 Backend running successfully!");
 });
@@ -61,12 +59,30 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 // ----------------------
-//  PROTECTED ROUTES
+//  USERS (protected)
 // ----------------------
 app.use("/api/users", protectRoute, userRoutes);
-app.use("/api/mentors", protectRoute, mentorRoutes);
+
+// ----------------------
+//  MENTORS 
+//  GET routes → PUBLIC
+//  update/delete → protected inside mentorRoutes.js
+// ----------------------
+app.use("/api/mentors", mentorRoutes);
+
+// ----------------------
+//  RESOURCES (protected)
+// ----------------------
 app.use("/api/resources", protectRoute, resourceRoutes);
+
+// ----------------------
+//  QUIZ ROUTES (protected)
+// ----------------------
 app.use("/api/quiz", protectRoute, quizRoutes);
+
+// ----------------------
+//  CHAT ROUTES (protected)
+// ----------------------
 app.use("/api/chat", protectRoute, chatRoutes);
 
 // ----------------------

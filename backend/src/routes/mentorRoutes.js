@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getMentors,
-  getMentorById,     // ⭐ REQUIRED
+  getMentorById,     // ✅ added/used below
   updateMentor,
   deleteMentor
 } from "../controllers/mentorController.js";
@@ -11,18 +11,19 @@ import { protectRoute } from "../middleware/protectRoute.js";
 const router = express.Router();
 
 /* ============================================================
-   GET ALL MENTORS
+   GET ALL MENTORS (PUBLIC)
    @route GET /api/mentors
-   @access Private
+   @access Public
 =============================================================== */
-router.get("/", protectRoute, getMentors);
+router.get("/", getMentors);
 
 /* ============================================================
-   GET MENTOR BY ID (for Mentor Profile Page)
+   GET MENTOR BY ID (for Mentor Profile Page) (PUBLIC)
    @route GET /api/mentors/:id
-   @access Private
+   @access Public
+   NOTE: keep this AFTER /me if you have /me GET — but we don't.
 =============================================================== */
-router.get("/:id", protectRoute, getMentorById);
+router.get("/:id", getMentorById);
 
 /* ============================================================
    UPDATE LOGGED-IN MENTOR
