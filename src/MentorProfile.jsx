@@ -24,6 +24,24 @@ const MentorProfile = () => {
 
   if (!mentor) return <p className="loading-text">Loading mentor...</p>;
 
+  // ⭐ BUTTON: TEST UPDATE MENTOR
+  const handleTestUpdate = async () => {
+    try {
+      const res = await API.put("/mentors/me", {
+        skills: mentor.skills + ", Updated",
+        experience: mentor.experience + " (updated)"
+      });
+
+      alert("Mentor Updated Successfully!");
+      console.log("UPDATE RESPONSE:", res.data);
+
+      fetchMentor(); // Refresh mentor data
+    } catch (err) {
+      console.error("Update Error:", err);
+      alert("Failed to update mentor");
+    }
+  };
+
   return (
     <div className="mentor-profile-wrapper">
       {/* TOP NAV */}
@@ -54,6 +72,7 @@ const MentorProfile = () => {
 
       {/* MAIN GRID */}
       <main className="mp-container">
+
         {/* LEFT COLUMN */}
         <div className="mp-left-col">
 
@@ -91,6 +110,25 @@ const MentorProfile = () => {
                 ))}
             </div>
           </div>
+
+          {/* ⭐ TEST UPDATE BUTTON */}
+          <button
+            onClick={handleTestUpdate}
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              padding: "12px",
+              background: "#4caf50",
+              color: "#fff",
+              borderRadius: "10px",
+              border: "none",
+              cursor: "pointer",
+              fontSize: "16px"
+            }}
+          >
+            🔄 Test Update Mentor (CRUD)
+          </button>
+
         </div>
 
         {/* RIGHT COLUMN */}
@@ -107,7 +145,7 @@ const MentorProfile = () => {
             <p>{mentor.experience || "Experience not added yet."}</p>
           </div>
 
-          {/* REVIEWS (Optional Mock) */}
+          {/* REVIEWS */}
           <div className="mp-card">
             <h3>Reviews</h3>
             <p>No reviews yet.</p>
