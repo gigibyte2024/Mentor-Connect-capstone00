@@ -162,7 +162,8 @@ const StudentMentorDiscover = () => {
                     <div
                       className="mentor-avatar"
                       style={{
-                        backgroundImage: `url("https://via.placeholder.com/150")`,
+                        backgroundColor: "#0af",
+
                       }}
                     />
 
